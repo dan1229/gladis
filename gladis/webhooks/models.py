@@ -14,6 +14,7 @@ class WebhookReceived(AbstractBaseModel):
     payload = models.JSONField(default=None, null=True)
 
     class Meta:
+        ordering = ["-received_at"]
         indexes = [
             models.Index(fields=["received_at"]),
         ]
@@ -36,6 +37,13 @@ class GithubWebhookReceived(WebhookReceived):
     pull_request = models.JSONField(default=None, null=True)
     workflow_run = models.JSONField(default=None, null=True)
     workflow_job = models.JSONField(default=None, null=True)
+
+
+    class Meta:
+        ordering = ["-received_at"]
+        
+    def __str__(self):
+        return f"Github Webhook ({self.webhook_type} - {self.action}): {self.received_at}"
 
     def process_github_webhook(self, send_slack_message=True):
         slack_message = ""
