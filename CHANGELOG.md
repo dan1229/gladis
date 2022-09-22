@@ -90,6 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - django apps
     - basic models
 - Client app, webhook app and core app
+- Basic CI
 
 -------------------------------------------------------
 
