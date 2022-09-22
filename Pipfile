@@ -8,6 +8,7 @@ django = "==4.1.1"
 djangorestframework = "==3.14.0"
 python-dotenv = "==0.19.1"
 django-extensions = "==3.2.1"
+slackclient = "==2.9.4"
 
 [dev-packages]
 black = "==22.8.0"
