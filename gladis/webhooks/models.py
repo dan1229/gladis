@@ -4,7 +4,6 @@ from core.models import AbstractBaseModel
 from core.helpers import str_to_bool
 from webhooks.slack import Slack
 
-
 #
 # WEBHOOK RECEIVED ====================================== #
 #
@@ -60,6 +59,8 @@ class GithubWebhookReceiver(WebhookReceived):
             
         if send_slack_message:
             Slack.send_slack_message(slack_message)
+        else:
+            print(slack_message)
 
 
     def parse_pull_request(self):
@@ -67,27 +68,27 @@ class GithubWebhookReceiver(WebhookReceived):
         
         action = self.payload.get("action")
         if action and action == "opened":
-            slack_message += "New PR opened! :tada:\n"
+            slack_message = Slack.add_to_slack_string(slack_message, "\tPR opened! :tada:")
         elif action and action == "closed":
-            slack_message += "PR closed!"
-        slack_message += f"\taction: {action}\n"
+            slack_message = Slack.add_to_slack_string(slack_message, "\tPR closed! :tada:")
+        Slack.add_to_slack_string(slack_message, "\taction: {action}")
         # TODO handle draft statuses
 
         title = self.payload.get("pull_request", {}).get("title")
         if title:
-            slack_message += f"\ttitle: {title}\n"
+            slack_message = Slack.add_to_slack_string(slack_message, f"\ttitle: {title}")
 
         pr_number = self.payload.get("pull_request", {}).get("number")
         if pr_number:
-            slack_message += f"\tpr number: {pr_number}\n"
+            slack_message = Slack.add_to_slack_string(slack_message, f"\tpr number: {pr_number}")
 
         state = self.payload.get("pull_request", {}).get("state")
         if state:
-            slack_message += f"\tstate: {state}\n"
+            slack_message = Slack.add_to_slack_string(slack_message, f"\tstate: {state}")
 
         is_draft = self.payload.get("pull_request", {}).get("draft")
         is_draft = str_to_bool(is_draft)
-        slack_message += f"\tis draft: {is_draft}\n"
+        slack_message = Slack.add_to_slack_string(slack_message, f"\tdraft: {is_draft}")
 
         github_user = (
             self.payload.get("pull_request", {}).get("user", {}).get("login")
@@ -96,18 +97,18 @@ class GithubWebhookReceiver(WebhookReceived):
             self.payload.get("pull_request", {}).get("user", {}).get("html_url")
         )
         if github_user:
-            slack_message += f"\tgithub user: {github_user}\n"
-            slack_message += f"\tgithub user link: {github_user_link}\n"
+            slack_message = Slack.add_to_slack_string(slack_message, f"\tuser: {github_user}")
+            slack_message = Slack.add_to_slack_string(slack_message, f"\tuser link: {github_user_link}")
 
         repository = self.payload.get("repository", {}).get("full_name")
         repository_link = self.payload.get("repository", {}).get("html_url")
         if repository:
-            slack_message += f"\trepository: {repository}\n"
-            slack_message += f"\trepository link: {repository_link}\n"
+            slack_message = Slack.add_to_slack_string(slack_message, f"\trepository: {repository}")
+            slack_message = Slack.add_to_slack_string(slack_message, f"\trepository link: {repository_link}")
 
         merged = self.payload.get("pull_request", {}).get("merged")
         merged = str_to_bool(merged)
-        slack_message += f"\tmerged: {merged}\n"
+        slack_message = Slack.add_to_slack_string(slack_message, f"\tmerged: {merged}")
 
         # TODO
         # save reviewer and author info
@@ -120,17 +121,19 @@ class GithubWebhookReceiver(WebhookReceived):
         slack_message = ''
         
         action = self.payload.get("action")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\tWorkflow {action}")
         if action and action == "completed":
-            slack_message += "\tWorkflow completed! :tada:\n"
+            slack_message += ":tada:"
         elif action and action == "requested":
-            slack_message += "\tWorkflow requested! :tada:\n"
+            slack_message += ":please:"
+        elif action and action == "failed":
+            slack_message += ":sad:"
 
-        workflow_name = self.payload.get("workflow", {}).get("name")
-        workflow_state = self.payload.get("workflow_run", {}).get("state")
-        workflow_url = self.payload.get("workflow", {}).get("html_url")
-        slack_message += f"\tworkflow name: {workflow_name}\n"
-        slack_message += f"\tworkflow state: {workflow_state}\n"
-        slack_message += f"\tworkflow url: {workflow_url}\n"
+        
+        slack_message = Slack.add_to_slack_string(slack_message, f"\id: {self.payload.get('workflow_run', {}).get('id')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\name: {self.payload.get('workflow', {}).get('name')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\state: {self.payload.get('workflow_run', {}).get('state')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\url: {self.payload.get('workflow', {}).get('html_url')}")
         
         return slack_message
     
@@ -138,16 +141,17 @@ class GithubWebhookReceiver(WebhookReceived):
         slack_message = ''
         
         action = self.payload.get("action")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\tWorkflow {action}")
         if action and action == "completed":
-            slack_message += "\tWorkflow completed! :tada:\n"
+            slack_message += ":tada:"
         elif action and action == "requested":
-            slack_message += "\tWorkflow requested! :tada:\n"
-
-        workflow_name = self.payload.get("workflow_job", {}).get("name")
-        workflow_status = self.payload.get("workflow_job", {}).get("status")
-        workflow_url = self.payload.get("workflow_job", {}).get("html_url")
-        slack_message += f"\tworkflow name: {workflow_name}\n"
-        slack_message += f"\tworkflow status: {workflow_status}\n"
-        slack_message += f"\tworkflow url: {workflow_url}\n"
+            slack_message += ":please:"
+        elif action and action == "failed":
+            slack_message += ":sad:"
+        
+        slack_message = Slack.add_to_slack_string(slack_message, f"\id: {self.payload.get('workflow_job', {}).get('id')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\name: {self.payload.get('workflow_job', {}).get('name')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\state: {self.payload.get('workflow_job', {}).get('state')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\url: {self.payload.get('workflow_job', {}).get('html_url')}")
         
         return slack_message
