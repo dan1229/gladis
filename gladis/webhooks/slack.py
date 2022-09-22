@@ -18,7 +18,7 @@ class SlackClient:
     def send_slack_message(self, message: str, slack_channel=None, slack_mention=None):
         """
         send slack message to a channel
-        
+
         Args:
             message (str): message to send
             slack_channel (str): channel to send message to

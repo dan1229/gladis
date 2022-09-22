@@ -2,14 +2,14 @@ from webhooks.slack import SlackClient
 
 from core.helpers import str_to_bool
 
-class GithubParser():
-    
+
+class GithubParser:
     def send_slack_message(self, send_slack_message, message):
         if send_slack_message:
             SlackClient().send_slack_message(message)
         else:
             print(message)
-            
+
     def add_workflow_status_emoji(self, slack_message, payload):
         action = payload.get("action")
         if action and action == "completed":
@@ -115,7 +115,7 @@ class GithubParser():
             slack_message, f"name: {payload.get('workflow', {}).get('name')}"
         )
         slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"webhook type: workflow run"
+            slack_message, "webhook type: workflow run"
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message,
@@ -124,7 +124,7 @@ class GithubParser():
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"url: {payload.get('workflow', {}).get('html_url')}"
         )
-        
+
         self.send_slack_message(send_slack_message, slack_message)
         return slack_message
 
@@ -136,7 +136,7 @@ class GithubParser():
             slack_message, f"Workflow {action}"
         )
         slack_message = self.add_workflow_status_emoji(slack_message, payload)
-        
+
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"id: {payload.get('workflow_job', {}).get('id')}"
         )
@@ -144,7 +144,7 @@ class GithubParser():
             slack_message, f"name: {payload.get('workflow_job', {}).get('name')}"
         )
         slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"webhook type: workflow job"
+            slack_message, "webhook type: workflow job"
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message,

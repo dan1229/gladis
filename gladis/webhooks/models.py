@@ -1,9 +1,7 @@
 from django.db import models
 
 from core.models import AbstractBaseModel
-from core.helpers import str_to_bool
 from webhooks.github_parser import GithubParser
-from webhooks.slack import SlackClient
 
 
 #
@@ -39,12 +37,13 @@ class GithubWebhookReceived(WebhookReceived):
     workflow_run = models.JSONField(default=None, null=True)
     workflow_job = models.JSONField(default=None, null=True)
 
-
     class Meta:
         ordering = ["-received_at"]
-        
+
     def __str__(self):
-        return f"Github Webhook ({self.webhook_type} - {self.action}): {self.received_at}"
+        return (
+            f"Github Webhook ({self.webhook_type} - {self.action}): {self.received_at}"
+        )
 
     def process_github_webhook(self, send_slack_message=True):
         action = self.payload.get("action")
