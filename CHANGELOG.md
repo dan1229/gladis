@@ -1,4 +1,4 @@
-# CHANGELOG for {project_name_capitalcase}
+# CHANGELOG for GLADIS
 #### By: [Daniel Nazarian](https://danielnazarian) 🐧👹
 ##### Contact me at <dnaz@danielnazarian.com>
 
@@ -64,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	1. if ci fails ping the author and mark as a draft again
 2. notify people of comments
 	1. if someone comments -> ping author
-	2. if author requests rereview -> ping reviewers
+	2. if author requests re=review -> ping reviewers
 
 
 -------------------------------------------------------
