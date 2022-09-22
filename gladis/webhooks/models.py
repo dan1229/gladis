@@ -130,10 +130,10 @@ class GithubWebhookReceiver(WebhookReceived):
             slack_message += ":sad:"
 
         
-        slack_message = Slack.add_to_slack_string(slack_message, f"\id: {self.payload.get('workflow_run', {}).get('id')}")
-        slack_message = Slack.add_to_slack_string(slack_message, f"\name: {self.payload.get('workflow', {}).get('name')}")
-        slack_message = Slack.add_to_slack_string(slack_message, f"\state: {self.payload.get('workflow_run', {}).get('state')}")
-        slack_message = Slack.add_to_slack_string(slack_message, f"\url: {self.payload.get('workflow', {}).get('html_url')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\tid: {self.payload.get('workflow_run', {}).get('id')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\tname: {self.payload.get('workflow', {}).get('name')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\tstate: {self.payload.get('workflow_run', {}).get('state')}")
+        slack_message = Slack.add_to_slack_string(slack_message, f"\turl: {self.payload.get('workflow', {}).get('html_url')}")
         
         return slack_message
     
