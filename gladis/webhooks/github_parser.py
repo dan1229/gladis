@@ -4,6 +4,11 @@ from core.helpers import str_to_bool
 
 
 class GithubParser:
+    
+    def send_slack_message_to_user(self, send_slack_message, slack_username, message):
+        if send_slack_message:
+            SlackClient().send_slack_direct_message(message, slack_username)
+            
     def send_slack_message_to_channel(self, send_slack_message, message):
         if send_slack_message:
             SlackClient().send_slack_message_to_channel(message)
@@ -28,15 +33,23 @@ class GithubParser:
     def parse_pull_request(self, payload, send_slack_message=True):
         slack_message = ""
 
+        merged = payload.get("pull_request", {}).get("merged")
+        merged = str_to_bool(merged)
+        
         action = payload.get("action")
         if action and action == "opened":
             slack_message = SlackClient.add_to_slack_string(
                 slack_message, "PR opened! :tada:"
             )
         elif action and action == "closed":
-            slack_message = SlackClient.add_to_slack_string(
-                slack_message, "PR closed! :tada:"
-            )
+            if merged:
+                slack_message = SlackClient.add_to_slack_string(
+                    slack_message, "PR merged! :merged_parrot:"
+                )
+            else:
+                slack_message = SlackClient.add_to_slack_string(
+                    slack_message, "PR closed! :sad:"
+                )
         SlackClient.add_to_slack_string(slack_message, "action: {action}")
         # TODO handle draft statuses
 
@@ -86,11 +99,6 @@ class GithubParser:
                 slack_message, f"repository link: {repository_link}"
             )
 
-        merged = payload.get("pull_request", {}).get("merged")
-        merged = str_to_bool(merged)
-        slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"merged: {merged}"
-        )
 
         # TODO
         # save reviewer and author info
