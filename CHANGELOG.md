@@ -27,6 +27,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - add to github as well
 
 
+### logging
+- where/how to log?
+- sentry?
+- slack lol
+
+### make model for prs as well?
+- do we want to track prs?
+
 ### api app
 - app for api endpoints
 
@@ -59,18 +67,13 @@ ngrok subdomain
 ### django templates
 - add base template and clean up a bit
 
------
-
-## MVP Features
-1. post to slack once ci passes for PRs
-	1. if ci fails ping the author and mark as a draft again
-2. notify people of comments
-	1. if someone comments -> ping author
-	2. if author requests re=review -> ping reviewers
-
 
 -------------------------------------------------------
 ### TODO
+----
+### 0.0.2
+
+
 ----
 ### 0.0.1
 
@@ -80,22 +83,35 @@ ngrok subdomain
 - add admin link
 
 
+### notify people of comments
+- if someone comments -> ping author
+- if author requests re review -> ping reviewers
+
+
+### post to slack when ci passes
+- post to slack channel
+- send dm to author
+- send dm to reviewers
+- mark pr as ready for review
+
+
 ### create models to track ci status
 - need to store ci status for each pr to tell when it passes
     - when passes send message
 
 
-### clean up message parsing
-- make GithubWebhookReceiver a child of WebhookReceiver
-  - use those for webhook creation
+### parse reviewers
 - parse reviewers
 - make function to dm people
+    - slack.chat.post_message('@to_user',msg,username='@from_user')
     - send dm to author
     - send dm to reviewers
 
 
-### [0.0.1] - 2022-09-DD
+### [0.0.1] - 2022-09-23
 - Initial release!
+- Basic Slack integration
+- Basic GitHub webhook receiver
 - Basic project setup
     - env file support
     - django apps
