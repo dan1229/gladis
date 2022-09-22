@@ -27,7 +27,7 @@ class WebhookReceived(AbstractBaseModel):
 
     def process_github_webhook(self):
         send_slack_message("processing github webhook")
-        
+
         # get pr information
         if self.payload.get("pull_request"):
             action = self.payload.get("action")
@@ -69,7 +69,7 @@ class WebhookReceived(AbstractBaseModel):
             if repository:
                 print(f"\trepository: {repository}")
                 print(f"\trepository link: {repository_link}")
-                
+
             merged = self.payload.get("pull_request", {}).get("merged")
             merged = str_to_bool(merged)
             print(f"\tmerged: {merged}")
