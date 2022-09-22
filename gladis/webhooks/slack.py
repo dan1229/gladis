@@ -15,7 +15,29 @@ class SlackClient:
             return f"{slack_string}\n{addition}"
         return f"{slack_string}{addition}"
 
-    def send_slack_message(self, message: str, slack_channel=None, slack_mention=None):
+    #
+    # SEND MESSAGES
+    #
+    def send_slack_direct_message(self, message: str, slack_username: str):
+        """
+        send slack message to a channel
+
+        Args:
+            message (str): message to send
+            slack_user (str): user to send message to - username NOT email
+        """
+        
+        try:
+            response = self.client.chat_postMessage(
+                channel=f"@{slack_username}",
+                text=f"{message}",
+            )
+            return True
+        except SlackApiError as e:
+            print(f"ERROR: {e}")
+            return False
+
+    def send_slack_message_to_channel(self, message: str, slack_channel=None, slack_mention=None):
         """
         send slack message to a channel
 
@@ -31,7 +53,7 @@ class SlackClient:
             slack_mention = settings.SLACK_MENTION_OVERRIDE
 
         try:
-            response = self.client.chat_postMessage(
+            self.client.chat_postMessage(
                 channel=f"#{slack_channel}",
                 text=f"<@{slack_mention}>\n---------------\n{message}",
             )

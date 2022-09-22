@@ -4,9 +4,9 @@ from core.helpers import str_to_bool
 
 
 class GithubParser:
-    def send_slack_message(self, send_slack_message, message):
+    def send_slack_message_to_channel(self, send_slack_message, message):
         if send_slack_message:
-            SlackClient().send_slack_message(message)
+            SlackClient().send_slack_message_to_channel(message)
         else:
             print(message)
 
@@ -96,7 +96,7 @@ class GithubParser:
         # save reviewer and author info
         # handle if switching base branch notification?
 
-        self.send_slack_message(send_slack_message, slack_message)
+        self.send_slack_message_to_channel(send_slack_message, slack_message)
         return slack_message
 
     def parse_workflow_run(self, payload, send_slack_message=True):
@@ -125,7 +125,7 @@ class GithubParser:
             slack_message, f"url: {payload.get('workflow', {}).get('html_url')}"
         )
 
-        self.send_slack_message(send_slack_message, slack_message)
+        self.send_slack_message_to_channel(send_slack_message, slack_message)
         return slack_message
 
     def parse_workflow_job(self, payload, send_slack_message=True):
@@ -155,5 +155,5 @@ class GithubParser:
             f"url: {payload.get('workflow_job', {}).get('html_url')}",
         )
 
-        self.send_slack_message(send_slack_message, slack_message)
+        self.send_slack_message_to_channel(send_slack_message, slack_message)
         return slack_message
