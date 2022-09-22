@@ -83,7 +83,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 install black and flake8
 
-add webhook attempt to admin
 
 ### [0.0.1] - 2022-09-DD
 - Initial release!
