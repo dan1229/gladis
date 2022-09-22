@@ -1,4 +1,3 @@
-import os
 from slack import WebClient
 from slack.errors import SlackApiError
 from django.conf import settings
