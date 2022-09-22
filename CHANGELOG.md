@@ -77,6 +77,7 @@ ngrok subdomain
 
 ### home page
 - add images!
+- add admin link
 
 
 ### webhook refactoring
@@ -86,16 +87,6 @@ ngrok subdomain
 ### create models to track ci status
 - need to store ci status for each pr to tell when it passes
     - when passes send message
-
-
-### slack integration
-- add slack app?
-- send messages on slack
-- env variables
-    - SLACK_CHANNEL_OVERRIDE
-    - SLACK_MENTION_OVERRIDE
-    - SLACK_API_KEY
-    - if DEBUG use overrides
 
 
 ### [0.0.1] - 2022-09-DD
