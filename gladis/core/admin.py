@@ -4,7 +4,6 @@ from core.models import User
 from django.contrib.auth import get_user_model
 
 
-
 class CustomUserAdmin(UserAdmin):
     model = get_user_model()
     list_display = (
@@ -13,7 +12,7 @@ class CustomUserAdmin(UserAdmin):
         "first_name",
         "last_name",
         "is_staff",
-    ) 
+    )
     list_display_links = (
         "is_active",
         "email",
@@ -53,5 +52,6 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
     readonly_fields = ("id",)
+
 
 admin.site.register(User, CustomUserAdmin)

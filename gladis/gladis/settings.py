@@ -58,7 +58,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     # local apps
     "core",
-    'client',
+    "client",
     "webhooks",
     # django apps
     "django.contrib.admin",
@@ -68,7 +68,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # extras
-    'django_extensions',
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
