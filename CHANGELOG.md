@@ -91,7 +91,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ensure we can receive github webhooks
 - setup ngrok
     - https://ngrok.com/docs/getting-started
-    
+- ngrok custom domain
+    - need to attach to some subdomain since it assigns random urls
+
 
 ### [0.0.1] - 2022-09-DD
 - Initial release!

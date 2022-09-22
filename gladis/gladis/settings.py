@@ -48,6 +48,8 @@ DEBUG = str_to_bool(_env_get_required("DEBUG"))
 
 ALLOWED_HOSTS = [
     ".ngrok.io",
+    "localhost",
+    "127.0.0.1",
 ]
 
 
@@ -56,7 +58,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     # local apps
     "core",
-    # 'client',
+    'client',
     "webhooks",
     # django apps
     "django.contrib.admin",
@@ -65,6 +67,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # extras
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
