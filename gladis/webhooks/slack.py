@@ -3,7 +3,6 @@ from slack.errors import SlackApiError
 from django.conf import settings
 
 
-
 class SlackClient:
     client = WebClient(token=settings.SLACK_API_KEY)
 
@@ -12,7 +11,7 @@ class SlackClient:
         if new_line:
             return f"{slack_string}\n{addition}"
         return f"{slack_string}{addition}"
-    
+
     def send_slack_message(self, message, slack_channel=None, slack_mention=None):
         """_send slack message to a channel"""
         if settings.SLACK_CHANNEL_OVERRIDE or not slack_channel:
@@ -23,7 +22,8 @@ class SlackClient:
 
         try:
             response = self.client.chat_postMessage(
-                channel=f"#{slack_channel}", text=f"@{slack_mention}\n---------------\n{message}"
+                channel=f"#{slack_channel}",
+                text=f"@{slack_mention}\n---------------\n{message}",
             )
             print(response)
         except SlackApiError as e:
