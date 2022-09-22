@@ -65,7 +65,7 @@ class GithubWebhookReceived(WebhookReceived):
             self.save()
 
         if send_slack_message:
-            SlackClient.send_slack_message(slack_message)
+            SlackClient().send_slack_message(slack_message)
         else:
             print(slack_message)
 
