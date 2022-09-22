@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
+from core.helpers import str_to_bool
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,16 +29,6 @@ def _env_get_required(setting_name):
     return setting
 
 
-def str_to_bool(v):
-    return str(v).lower() in (
-        "yes",
-        "true",
-        "t",
-        "1",
-        "on",
-    )
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -46,7 +38,11 @@ SECRET_KEY = _env_get_required("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str_to_bool(_env_get_required("DEBUG"))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ".ngrok.io",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -54,7 +50,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # local apps
     "core",
-    # 'client',
+    "client",
     "webhooks",
     # django apps
     "django.contrib.admin",
@@ -63,6 +59,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # extras
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -100,7 +98,6 @@ WSGI_APPLICATION = "gladis.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -111,7 +108,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
+AUTH_USER_MODEL = "core.User"
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -149,3 +146,4 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+SESSION_COOKIE_SECURE = False
