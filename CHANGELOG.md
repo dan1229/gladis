@@ -27,10 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - add to github as well
 
 
-### slack messages
-- put in a class
-- optimize in some way lol
-
 ### api app
 - app for api endpoints
 
@@ -84,13 +80,18 @@ ngrok subdomain
 - add admin link
 
 
-### webhook refactoring
-- make GithubWebhookReceiver a child of WebhookReceiver
-
-
 ### create models to track ci status
 - need to store ci status for each pr to tell when it passes
     - when passes send message
+
+
+### clean up message parsing
+- make GithubWebhookReceiver a child of WebhookReceiver
+  - use those for webhook creation
+- parse reviewers
+- make function to dm people
+    - send dm to author
+    - send dm to reviewers
 
 
 ### [0.0.1] - 2022-09-DD
