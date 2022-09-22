@@ -2,6 +2,7 @@ from django.db import models
 
 from core.models import AbstractBaseModel
 from core.helpers import str_to_bool
+from webhooks.slack import send_slack_message
 
 
 #
@@ -25,6 +26,8 @@ class WebhookReceived(AbstractBaseModel):
         return self.payload.get("action")
 
     def process_github_webhook(self):
+        send_slack_message("processing github webhook")
+        
         # get pr information
         if self.payload.get("pull_request"):
             action = self.payload.get("action")
