@@ -153,5 +153,5 @@ SLACK_CHANNEL_OVERRIDE = _env_get_required("SLACK_CHANNEL_OVERRIDE")
 SLACK_MENTION_OVERRIDE = _env_get_required("SLACK_MENTION_OVERRIDE")
 SLACK_API_KEY = _env_get_required("SLACK_API_KEY")
 if DEBUG:
-    SLACK_CHANNEL_OVERRIDE = "slack-message-testing"
+    SLACK_CHANNEL_OVERRIDE = "daniel-slack-messages"
     SLACK_MENTION_OVERRIDE = "danieln"
