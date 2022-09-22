@@ -8,6 +8,18 @@ class GithubParser():
             SlackClient().send_slack_message(message)
         else:
             print(message)
+            
+    def add_workflow_status_emoji(self, slack_message, payload):
+        action = payload.get("action")
+        if action and action == "completed":
+            slack_message += ":tada:"
+        elif action and action == "requested":
+            slack_message += ":please:"
+        elif action and action == "failed":
+            slack_message += ":sad:"
+        elif action and action == "queued":
+            slack_message += ":sonic-waiting:"
+        return slack_message
 
     #
     # PARSING FUNCTIONS
@@ -93,12 +105,7 @@ class GithubParser():
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"Workflow {action}"
         )
-        if action and action == "completed":
-            slack_message += ":tada:"
-        elif action and action == "requested":
-            slack_message += ":please:"
-        elif action and action == "failed":
-            slack_message += ":sad:"
+        slack_message = self.add_workflow_status_emoji(slack_message, payload)
 
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"id: {payload.get('workflow_run', {}).get('id')}"
@@ -124,13 +131,8 @@ class GithubParser():
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"Workflow {action}"
         )
-        if action and action == "completed":
-            slack_message += ":tada:"
-        elif action and action == "requested":
-            slack_message += ":please:"
-        elif action and action == "failed":
-            slack_message += ":sad:"
-
+        slack_message = self.add_workflow_status_emoji(slack_message, payload)
+        
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"id: {payload.get('workflow_job', {}).get('id')}"
         )
