@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
+from core.helpers import str_to_bool
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,16 +27,6 @@ def _env_get_required(setting_name):
         "",
     }, "{0} must be defined as an environment variable.".format(setting_name)
     return setting
-
-
-def str_to_bool(v):
-    return str(v).lower() in (
-        "yes",
-        "true",
-        "t",
-        "1",
-        "on",
-    )
 
 
 # Quick-start development settings - unsuitable for production
