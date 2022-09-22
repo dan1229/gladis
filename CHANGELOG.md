@@ -64,14 +64,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 0.0.1
 
 
-### environment variables
-- add .env file and package
-
 
 ### [0.0.1] - 2022-MM-DD
 - Initial release!
 - Basic project setup
-    - env files
+    - env file support
     - django apps
     - basic models
 
