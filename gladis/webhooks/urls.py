@@ -17,5 +17,5 @@ urlpatterns = [
     # we attach a random string to each url to add a level
     # of security to the webhook listener, since presumably
     # only the webhook sender will have this exact URL
-    path(r"github/pAXESnQTVN0l3Cjv/", github_webhook),
+    path(r"github/pAXESnQTVN0l3Cjv", github_webhook),
 ] + router.urls
