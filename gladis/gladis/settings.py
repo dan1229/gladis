@@ -147,3 +147,11 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SESSION_COOKIE_SECURE = False
+
+# Slack settings
+SLACK_CHANNEL_OVERRIDE = _env_get_required("SLACK_CHANNEL_OVERRIDE")
+SLACK_MENTION_OVERRIDE = _env_get_required("SLACK_MENTION_OVERRIDE")
+SLACK_API_KEY = _env_get_required("SLACK_API_KEY")
+if DEBUG:
+    SLACK_CHANNEL_OVERRIDE = 'daniel-slack-message-testing'
+    SLACK_MENTION_OVERRIDE = "danieln@mercury.com"

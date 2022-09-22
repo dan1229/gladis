@@ -48,9 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - client app
     - 'home' view
 
-
-### webhook refactoring
-- make GithubWebhookReceiver a child of WebhookReceiver
+ngrok subdomain
+- need to attach to some subdomain since it assigns random urls
 
 
 ### auth
@@ -78,24 +77,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### home page
 - add images!
+- add admin link
 
 
-### slack integration
-- add slack app?
-- send messages on slack
-- env variables
-    - SLACK_CHANNEL_OVERRIDE
-    - SLACK_MENTION_OVERRIDE
-    - SLACK_API_KEY
-    - if DEBUG use overrides
+### create models to track ci status
+- need to store ci status for each pr to tell when it passes
+    - when passes send message
 
 
-### test webhook integration
-- ensure we can receive github webhooks
-- setup ngrok
-    - https://ngrok.com/docs/getting-started
-- ngrok custom domain
-    - need to attach to some subdomain since it assigns random urls
+### clean up message parsing
+- make GithubWebhookReceiver a child of WebhookReceiver
+  - use those for webhook creation
+- parse reviewers
+- make function to dm people
+    - send dm to author
+    - send dm to reviewers
 
 
 ### [0.0.1] - 2022-09-DD
