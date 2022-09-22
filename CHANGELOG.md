@@ -22,11 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -----
 
-### ci cd
-- python lint
-- python test
-
-
 ### security
 - add webhook secret
     - add to github as well
@@ -36,8 +31,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - app for api endpoints
 
 
+### ci cd
+- python lint
+- python test
+
+
+### TESTS
+- webhooks
+    - test webhook receivers against different event types
+- slack?
+    - TODO
+
+
 ### client app
 - app for client ui
+
+
+### auth
+- oauth? - https://docs.github.com/en/developers/apps/building-oauth-apps
+
 
 -----
 
@@ -49,20 +61,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	2. if author requests rereview -> ping reviewers
 
 
------
-
-### slack integration
-- send messages on slack
-
-
-### auth
-- oauth? - https://docs.github.com/en/developers/apps/building-oauth-apps
-
-
-### webhooks
-- https://adamj.eu/tech/2021/05/09/how-to-build-a-webhook-receiver-in-django/
-
-
 -------------------------------------------------------
 ### TODO
 ----
@@ -70,7 +68,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-### [0.0.1] - 2022-MM-DD
+### slack integration
+- send messages on slack
+
+
+### [0.0.1] - 2022-09-DD
 - Initial release!
 - Basic project setup
     - env file support
