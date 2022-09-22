@@ -64,18 +64,13 @@ ngrok subdomain
 ### django templates
 - add base template and clean up a bit
 
------
-
-## MVP Features
-1. post to slack once ci passes for PRs
-	1. if ci fails ping the author and mark as a draft again
-2. notify people of comments
-	1. if someone comments -> ping author
-	2. if author requests re=review -> ping reviewers
-
 
 -------------------------------------------------------
 ### TODO
+----
+### 0.0.2
+
+
 ----
 ### 0.0.1
 
@@ -85,9 +80,22 @@ ngrok subdomain
 - add admin link
 
 
+### notify people of comments
+- if someone comments -> ping author
+- if author requests re review -> ping reviewers
+
+
+### post to slack when ci passes
+- post to slack channel
+- send dm to author
+- send dm to reviewers
+- mark pr as ready for review
+
+
 ### create models to track ci status
 - need to store ci status for each pr to tell when it passes
     - when passes send message
+
 
 ### parse reviewers
 - parse reviewers
