@@ -49,6 +49,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - 'home' view
 
 
+### webhook refactoring
+- make GithubWebhookReceiver a child of WebhookReceiver
+
 
 ### auth
 - oauth? - https://docs.github.com/en/developers/apps/building-oauth-apps
