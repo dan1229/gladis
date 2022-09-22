@@ -119,7 +119,7 @@ class GithubParser():
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message,
-            f"status: {payload.get('workflow', {}).get('status')}",
+            f"status: {payload.get('workflow_run', {}).get('status')}",
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"url: {payload.get('workflow', {}).get('html_url')}"
