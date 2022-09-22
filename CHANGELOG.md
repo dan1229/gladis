@@ -32,6 +32,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - sentry?
 - slack lol
 
+### make model for prs as well?
+- do we want to track prs?
+
 ### api app
 - app for api endpoints
 
