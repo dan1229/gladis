@@ -62,7 +62,7 @@ class GithubWebhookReceived(WebhookReceived):
         if self.payload.get("workflow_run"):
             self.workflow_run = self.payload.get("workflow_run")
             self.webhook_type = "workflow_run"
-            GithubParser().parse_workflow_run(self.payloa, send_slack_message)
+            GithubParser().parse_workflow_run(self.payload, send_slack_message)
             self.save()
 
         # get workflow job information

@@ -114,6 +114,9 @@ class GithubParser():
             slack_message, f"name: {payload.get('workflow', {}).get('name')}"
         )
         slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"webhook type: workflow run"
+        )
+        slack_message = SlackClient.add_to_slack_string(
             slack_message,
             f"state: {payload.get('workflow_run', {}).get('state')}",
         )
@@ -140,8 +143,11 @@ class GithubParser():
             slack_message, f"name: {payload.get('workflow_job', {}).get('name')}"
         )
         slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"webhook type: workflow job"
+        )
+        slack_message = SlackClient.add_to_slack_string(
             slack_message,
-            f"state: {payload.get('workflow_job', {}).get('state')}",
+            f"state: {payload.get('workflow', {}).get('state')}",
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message,
