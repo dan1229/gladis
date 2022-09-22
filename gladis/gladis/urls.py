@@ -21,4 +21,6 @@ urlpatterns = [
     path("webhooks/v1/", include("webhooks.urls")),
     # ADMIN ============================== #
     path('admin/', admin.site.urls),
+    # CLIENT ============================= #
+    path('', include("client.urls")),
 ]

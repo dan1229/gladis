@@ -36,20 +36,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - python test
 
 
+### favicon!
+- add one!
+
+
 ### TESTS
 - webhooks
     - test webhook receivers against different event types
 - slack?
     - TODO
+- client app
+    - 'home' view
 
-
-### client app
-- app for client ui
 
 
 ### auth
 - oauth? - https://docs.github.com/en/developers/apps/building-oauth-apps
 
+
+### django templates
+- add base template and clean up a bit
 
 -----
 
@@ -67,10 +73,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 0.0.1
 
 
+### home page
+- add images!
+
 
 ### slack integration
+- add slack app?
 - send messages on slack
 
+install black and flake8
+
+add webhook attempt to admin
 
 ### [0.0.1] - 2022-09-DD
 - Initial release!
@@ -78,6 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - env file support
     - django apps
     - basic models
+- Client app, webhook app and core app
 
 -------------------------------------------------------
 

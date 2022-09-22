@@ -53,6 +53,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # local apps
     'core',
+    # 'client',
     'webhooks',
     # django apps
     'django.contrib.admin',
@@ -78,7 +79,9 @@ ROOT_URLCONF = 'gladis.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'client', 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
