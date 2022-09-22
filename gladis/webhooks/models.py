@@ -25,7 +25,7 @@ class WebhookReceived(AbstractBaseModel):
     def get_property_action(self):
         return self.payload.get("action")
 
-    def process_github_webhook(self, send_slack_message=True):
+    def process_github_webhook(self, should_send_slack_message=True):
         slack_message = ''
         # get pr information
         if self.payload.get("pull_request"):
@@ -106,5 +106,5 @@ class WebhookReceived(AbstractBaseModel):
             slack_message += f"\tworkflow status: {workflow_status}\n"
             slack_message += f"\tworkflow url: {workflow_url}\n"
             
-        if send_slack_message:
+        if should_send_slack_message:
             send_slack_message(slack_message)
