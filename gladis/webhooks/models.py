@@ -18,3 +18,7 @@ class WebhookReceived(AbstractBaseModel):
 
     def __str__(self):
         return f"Webhook Received: {self.received_at}"
+
+    @property
+    def get_property_action(self):
+        return self.payload.get("action")
