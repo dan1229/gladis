@@ -60,7 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -----
 
 ## MVP Features
-1. post to slack once ci passes for 
+1. post to slack once ci passes for PRs
 	1. if ci fails ping the author and mark as a draft again
 2. notify people of comments
 	1. if someone comments -> ping author
@@ -80,6 +80,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### slack integration
 - add slack app?
 - send messages on slack
+- env variables
+    - SLACK_CHANNEL_OVERRIDE
+    - SLACK_MENTION_OVERRIDE
+    - SLACK_API_KEY
+    - if DEBUG use overrides
 
 
 

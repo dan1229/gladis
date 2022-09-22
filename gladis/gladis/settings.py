@@ -46,7 +46,9 @@ SECRET_KEY = _env_get_required("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str_to_bool(_env_get_required("DEBUG"))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ".ngrok.io",
+]
 
 
 # Application definition
