@@ -2,7 +2,7 @@ from django.db import models
 
 from core.models import AbstractBaseModel
 from core.helpers import str_to_bool
-from gladis.webhooks.github_parser import GithubParser
+from webhooks.github_parser import GithubParser
 from webhooks.slack import SlackClient
 
 
