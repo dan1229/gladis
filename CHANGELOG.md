@@ -22,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -----
 
+### ci cd
+- python lint
+- python test
+
+
 ### security
 - add webhook secret
     - add to github as well
