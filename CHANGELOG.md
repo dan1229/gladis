@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - add to github as well
 
 
+### slack messages
+- put in a class
+- optimize in some way lol
+
 ### api app
 - app for api endpoints
 
