@@ -51,7 +51,9 @@ class WebhookReceived(AbstractBaseModel):
             is_draft = str_to_bool(is_draft)
             print(f"\tis draft: {is_draft}")
 
-            github_user = self.payload.get("pull_request", {}).get("user", {}).get("login")
+            github_user = (
+                self.payload.get("pull_request", {}).get("user", {}).get("login")
+            )
             github_user_link = (
                 self.payload.get("pull_request", {}).get("user", {}).get("html_url")
             )
@@ -64,7 +66,7 @@ class WebhookReceived(AbstractBaseModel):
             if repository:
                 print(f"\trepository: {repository}")
                 print(f"\trepository link: {repository_link}")
-                
+
             # TODO handle if switching base branch notification?
 
         # get workflow run information
@@ -74,14 +76,13 @@ class WebhookReceived(AbstractBaseModel):
                 print("\tWorkflow completed!")
             elif action and action == "requested":
                 print("\tWorkflow requested!")
-                
+
             workflow_name = self.payload.get("workflow", {}).get("name")
             workflow_state = self.payload.get("workflow_run", {}).get("state")
             workflow_url = self.payload.get("workflow", {}).get("html_url")
             print(f"\tworkflow name: {workflow_name}")
             print(f"\tworkflow state: {workflow_state}")
             print(f"\tworkflow url: {workflow_url}")
-            
 
         # get workflow job information
         if self.payload.get("workflow_job"):
@@ -90,11 +91,10 @@ class WebhookReceived(AbstractBaseModel):
                 print("\tWorkflow completed!")
             elif action and action == "requested":
                 print("\tWorkflow requested!")
-                
+
             workflow_name = self.payload.get("workflow_job", {}).get("name")
             workflow_status = self.payload.get("workflow_job", {}).get("status")
             workflow_url = self.payload.get("workflow_job", {}).get("html_url")
             print(f"\tworkflow name: {workflow_name}")
             print(f"\tworkflow status: {workflow_status}")
             print(f"\tworkflow url: {workflow_url}")
-            
