@@ -14,7 +14,14 @@ class SlackClient:
         return f"{slack_string}{addition}"
 
     def send_slack_message(self, message: str, slack_channel=None, slack_mention=None):
-        """_send slack message to a channel"""
+        """
+        send slack message to a channel
+        
+        Args:
+            message (str): message to send
+            slack_channel (str): channel to send message to
+            slack_mention (str): user to mention in message - username NOT email
+        """
         if settings.SLACK_CHANNEL_OVERRIDE or not slack_channel:
             slack_channel = settings.SLACK_CHANNEL_OVERRIDE
 
@@ -27,5 +34,7 @@ class SlackClient:
                 text=f"<@{slack_mention}>\n---------------\n{message}",
             )
             print(response)
+            return True
         except SlackApiError as e:
             print(f"ERROR: {e}")
+            return False

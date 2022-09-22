@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - add to github as well
 
 
+### logging
+- where/how to log?
+- sentry?
+- slack lol
+
 ### api app
 - app for api endpoints
 
