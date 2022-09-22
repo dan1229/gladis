@@ -1,5 +1,6 @@
 from webhooks.slack import SlackClient
 
+from core.helpers import str_to_bool
 
 class GithubParser():
     
@@ -118,7 +119,7 @@ class GithubParser():
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message,
-            f"state: {payload.get('workflow_run', {}).get('state')}",
+            f"status: {payload.get('workflow', {}).get('status')}",
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"url: {payload.get('workflow', {}).get('html_url')}"
@@ -147,7 +148,7 @@ class GithubParser():
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message,
-            f"state: {payload.get('workflow', {}).get('state')}",
+            f"status: {payload.get('workflow_job', {}).get('status')}",
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message,

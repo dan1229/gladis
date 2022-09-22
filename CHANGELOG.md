@@ -100,6 +100,7 @@ ngrok subdomain
 ### parse reviewers
 - parse reviewers
 - make function to dm people
+    - slack.chat.post_message('@to_user',msg,username='@from_user')
     - send dm to author
     - send dm to reviewers
 
