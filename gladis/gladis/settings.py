@@ -154,4 +154,4 @@ SLACK_MENTION_OVERRIDE = _env_get_required("SLACK_MENTION_OVERRIDE")
 SLACK_API_KEY = _env_get_required("SLACK_API_KEY")
 if DEBUG:
     SLACK_CHANNEL_OVERRIDE = 'daniel-slack-message-testing'
-    SLACK_MENTION_OVERRIDE = "danieln"
+    SLACK_MENTION_OVERRIDE = "danieln@mercury.com"
