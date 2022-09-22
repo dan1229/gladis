@@ -12,7 +12,7 @@
     ],
     "configurations": [
         {"name": "ngrok", "type": "node-terminal", "command": "ngrok http 8000", "request": "launch"},
-        {"name": "ngrok auth", "type": "node-terminal", "command": "ngrok http 8000 --basic-auth 'ngrok:issecure'", "request": "launch"},
+        {"name": "ngrok auth", "type": "node-terminal", "command": "ngrok http 8000 --oauth google", "request": "launch"},
         {
             "name": "server",
             "type": "python",

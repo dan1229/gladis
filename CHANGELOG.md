@@ -87,6 +87,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - if DEBUG use overrides
 
 
+### test webhook integration
+- ensure we can receive github webhooks
+- setup ngrok
+    - https://ngrok.com/docs/getting-started
+    
 
 ### [0.0.1] - 2022-09-DD
 - Initial release!
