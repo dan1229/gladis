@@ -26,8 +26,12 @@ class WebhookReceived(AbstractBaseModel):
         return self.payload.get("action")
 
 
-class GithubWebhookReceiver(WebhookReceived):
+#
+# GITHUB WEBHOOK RECEIVED ====================================== #
+#
+class GithubWebhookReceived(WebhookReceived):
     action = models.CharField(max_length=255, help_text="The action of the event.")
+    webhook_type = models.CharField(max_length=255, help_text="The type of webhook.")
 
     pull_request = models.JSONField(default=None, null=True)
     workflow_run = models.JSONField(default=None, null=True)
@@ -41,20 +45,22 @@ class GithubWebhookReceiver(WebhookReceived):
 
         # get pr information
         if self.payload.get("pull_request"):
-            # update object
             self.pull_request = self.payload.get("pull_request")
+            self.webhook_type = "pull_request"
             slack_message = self.parse_pull_request()
             self.save()
 
         # get workflow run information
         if self.payload.get("workflow_run"):
             self.workflow_run = self.payload.get("workflow_run")
+            self.webhook_type = "workflow_run"
             slack_message = self.parse_workflow_run()
             self.save()
 
         # get workflow job information
         if self.payload.get("workflow_job"):
             self.workflow_job = self.payload.get("workflow_job")
+            self.webhook_type = "workflow_job"
             slack_message = self.parse_workflow_job()
             self.save()
 
