@@ -1,6 +1,3 @@
-
-
-
 def str_to_bool(v):
     return str(v).lower() in (
         "yes",

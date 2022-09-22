@@ -23,40 +23,40 @@ class WebhookReceived(AbstractBaseModel):
     @property
     def get_property_action(self):
         return self.payload.get("action")
-    
+
     def process_github_webhook(self):
         action = self.payload.get("action")
-        if action and action == 'opened':
+        if action and action == "opened":
             print("New PR opened!")
-        elif action and action == 'closed':
+        elif action and action == "closed":
             print("PR closed!")
-            
+
         title = self.payload.get("pull_request", {}).get("title")
         if title:
             print(f"\ttitle: {title}")
-            
-        pr_number =  self.payload.get("pull_request", {}).get("number")
+
+        pr_number = self.payload.get("pull_request", {}).get("number")
         if pr_number:
             print(f"\tpr number: {pr_number}")
-        
+
         state = self.payload.get("pull_request", {}).get("state")
         if state:
             print(f"\tstate: {state}")
-            
+
         is_draft = self.payload.get("pull_request", {}).get("draft")
         is_draft = str_to_bool(is_draft)
         print(f"\tis draft: {is_draft}")
-            
+
         github_user = self.payload.get("pull_request", {}).get("user", {}).get("login")
-        github_user_link = self.payload.get("pull_request", {}).get("user", {}).get("html_url")
+        github_user_link = (
+            self.payload.get("pull_request", {}).get("user", {}).get("html_url")
+        )
         if github_user:
             print(f"\tgithub user: {github_user}")
             print(f"\tgithub user link: {github_user_link}")
-            
+
         repository = self.payload.get("repository", {}).get("full_name")
         repository_link = self.payload.get("repository", {}).get("html_url")
         if repository:
             print(f"\trepository: {repository}")
             print(f"\trepository link: {repository_link}")
-            
-    

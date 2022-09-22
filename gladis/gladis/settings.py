@@ -29,7 +29,6 @@ def _env_get_required(setting_name):
     return setting
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
