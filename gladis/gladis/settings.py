@@ -11,19 +11,39 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+def _env_get_required(setting_name):
+    """Get the value of an environment variable and assert that it is set."""
+    setting = os.environ.get(setting_name)
+    assert setting not in {
+        None,
+        "",
+    }, "{0} must be defined as an environment variable.".format(setting_name)
+    return setting
+
+
+
+def str_to_bool(v):
+    return str(v).lower() in (
+        "yes",
+        "true",
+        "t",
+        "1",
+        "on",
+    )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sdxwj0g0fbrx6r6md=nx&&2d)c54&e(3hy_a3q$)7m5q4y&9=h'
+SECRET_KEY = _env_get_required("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  str_to_bool(_env_get_required("DEBUG"))
 
 ALLOWED_HOSTS = []
 
