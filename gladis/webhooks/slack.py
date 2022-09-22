@@ -9,6 +9,8 @@ class SlackClient:
     @staticmethod
     def add_to_slack_string(slack_string: str, addition: str, new_line=True):
         """add a string to a slack message string"""
+        if slack_string == "":
+            return f"{addition}\n"
         if new_line:
             return f"{slack_string}\n{addition}"
         return f"{slack_string}{addition}"
@@ -33,7 +35,6 @@ class SlackClient:
                 channel=f"#{slack_channel}",
                 text=f"<@{slack_mention}>\n---------------\n{message}",
             )
-            print(response)
             return True
         except SlackApiError as e:
             print(f"ERROR: {e}")

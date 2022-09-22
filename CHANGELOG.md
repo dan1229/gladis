@@ -96,10 +96,6 @@ ngrok subdomain
     - send dm to reviewers
 
 
-### clean up message parsing
-- add option to send messages for particular webhook_types
-
-
 ### [0.0.1] - 2022-09-23
 - Initial release!
 - Basic Slack integration
