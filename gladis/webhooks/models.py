@@ -66,6 +66,10 @@ class WebhookReceived(AbstractBaseModel):
             if repository:
                 print(f"\trepository: {repository}")
                 print(f"\trepository link: {repository_link}")
+                
+            merged = self.payload.get("pull_request", {}).get("merged")
+            merged = str_to_bool(merged)
+            print(f"\tmerged: {merged}")
 
             # TODO handle if switching base branch notification?
 

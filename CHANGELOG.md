@@ -48,7 +48,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - client app
     - 'home' view
 
-
 ### webhook refactoring
 - make GithubWebhookReceiver a child of WebhookReceiver
 
@@ -79,6 +78,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### home page
 - add images!
 
+ngrok subdomain
+- need to attach to some subdomain since it assigns random urls
+
 
 ### slack integration
 - add slack app?
@@ -94,8 +96,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ensure we can receive github webhooks
 - setup ngrok
     - https://ngrok.com/docs/getting-started
-- ngrok custom domain
-    - need to attach to some subdomain since it assigns random urls
 
 
 ### [0.0.1] - 2022-09-DD
