@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "Run app (debug)",
+            "configurations": ["server", "ngrok"],
+            "stopAll": true
+        }
+    ],
+    "configurations": [
+        {"name": "ngrok", "type": "node-terminal", "command": "ngrok http 8000", "request": "launch"},
+        {"name": "ngrok auth", "type": "node-terminal", "command": "ngrok http 8000 --basic-auth 'ngrok:issecure'", "request": "launch"},
+        {
+            "name": "server",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/gladis/manage.py",
+            "args": [
+                "runserver"
+            ],
+            "django": true,
+            "justMyCode": true
+        }
+    ]
+}

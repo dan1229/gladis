@@ -1,0 +1,8 @@
+{
+    "version": "2.0.0",
+    "tasks": [{
+        "label": "ngrok",
+        "command": "ngrok http 8000 --basic-auth 'ngrok:issecure'",
+        "type": "shell"
+    }]
+}
