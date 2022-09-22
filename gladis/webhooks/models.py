@@ -9,6 +9,7 @@ from core.models import AbstractBaseModel
 #
 class WebhookReceived(AbstractBaseModel):
     received_at = models.DateTimeField(help_text="When we received the event.")
+    sender = models.CharField(max_length=255, help_text="The sender of the event.")
     payload = models.JSONField(default=None, null=True)
 
     class Meta:

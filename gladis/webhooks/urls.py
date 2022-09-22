@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from webhooks.views import github_webhook
 
 """
 # =================================================================================================== #
@@ -12,6 +13,9 @@ router = DefaultRouter()
 
 # urls for 'misc' routes
 urlpatterns = [
-    # EMAIL ======================================================== #
-    # path(r"emails/", EmailViewSet.as_view()),
+    # WEBHOOK LISTENERS ======================================================== #
+    # we attach a random string to each url to add a level
+    # of security to the webhook listener, since presumably
+    # only the webhook sender will have this exact URL
+    path(r"github/pAXESnQTVN0l3Cjv", github_webhook),
 ] + router.urls
