@@ -16,5 +16,6 @@ class WebhookReceivedAdmin(admin.ModelAdmin):
     )
     readonly_fields = ("id",)
     list_per_page = 100
-    
+
+
 admin.site.register(WebhookReceived, WebhookReceivedAdmin)

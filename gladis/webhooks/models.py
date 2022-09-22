@@ -2,7 +2,6 @@ from django.db import models
 
 from core.models import AbstractBaseModel
 
-# Create your models here.
 
 #
 # WEBHOOK RECEIVED ====================================== #
@@ -16,6 +15,6 @@ class WebhookReceived(AbstractBaseModel):
         indexes = [
             models.Index(fields=["received_at"]),
         ]
-        
+
     def __str__(self):
         return f"Webhook Received: {self.received_at}"

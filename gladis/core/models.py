@@ -12,6 +12,7 @@ from django.db import models
 # handles all shared functionality between classes
 #
 
+
 class AbstractBaseModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     datetime_created = models.DateTimeField(auto_now_add=True)

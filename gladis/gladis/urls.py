@@ -20,7 +20,7 @@ urlpatterns = [
     # APIS =============================== #
     path("webhooks/v1/", include("webhooks.urls")),
     # ADMIN ============================== #
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     # CLIENT ============================= #
-    path('', include("client.urls")),
+    path("", include("client.urls")),
 ]

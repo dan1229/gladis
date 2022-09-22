@@ -81,7 +81,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add slack app?
 - send messages on slack
 
-install black and flake8
 
 
 ### [0.0.1] - 2022-09-DD
