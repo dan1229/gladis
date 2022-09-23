@@ -143,9 +143,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 #### link github usernames to slack usernames
-- UserSettings model
-    - user fk
-    - slack username string
 - ensure before sending messages (even processing the hook) that user has an accoutn and slack username
 - update function where we convert github username to slack username
     - if slack username is not found, send email to user to update their slack username?

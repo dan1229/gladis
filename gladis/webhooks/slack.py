@@ -1,6 +1,7 @@
 from slack import WebClient
 from slack.errors import SlackApiError
 from django.conf import settings
+from core.models import UserSettings
 
 
 class SlackClient:
@@ -9,12 +10,10 @@ class SlackClient:
     @staticmethod
     def get_slack_username(github_username):
         """Get slack username from github username"""
-        if github_username == "dan1229":
-            return "danieln"
-        elif github_username == "turnage":
-            return "payton"
-        else:
-            return settings.SLACK_USERNAME_OVERRIDE
+        user_settings_queryset = UserSettings.objects.filter(github_username=github_username)
+        if user_settings_queryset.count() == 0:
+            return None
+        return user_settings_queryset.first().slack_username
 
     @staticmethod
     def add_to_slack_string(slack_string: str, addition: str, new_line=True):

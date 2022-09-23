@@ -25,6 +25,17 @@ class WebhookReceived(AbstractBaseModel):
     def get_property_action(self):
         return self.payload.get("action")
 
+#
+# FUNCTIONS ====================================== #
+#
+def user_is_involved(self):
+    """
+    Check if the user is involved in the event.
+    """
+    
+    # TODO search for user in db
+    # maybe add function to manager?
+    return False
 
 #
 # GITHUB WEBHOOK RECEIVED ====================================== #
