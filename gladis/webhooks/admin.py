@@ -69,7 +69,7 @@ class GithubWorkflowAdmin(admin.ModelAdmin):
         "action",
         "status",
         "conclusion",
-        "pull_request_id",
+        "pull_request_github_id",
         "datetime_created",
     )
     search_fields = (
@@ -79,7 +79,7 @@ class GithubWorkflowAdmin(admin.ModelAdmin):
         "action",
         "status",
         "conclusion",
-        "pull_request_id",
+        "pull_request_github_id",
         "datetime_created",
     )
     readonly_fields = ("id",)
