@@ -3,11 +3,11 @@ from django.contrib.auth.admin import UserAdmin
 from core.models import User, UserSettings
 from django.contrib.auth import get_user_model
 
+
 class UserSettingsInline(admin.StackedInline):
     model = UserSettings
     can_delete = False
     fk_name = "user"
-
 
 
 class CustomUserAdmin(UserAdmin):
