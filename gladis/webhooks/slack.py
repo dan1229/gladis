@@ -15,7 +15,7 @@ class SlackClient:
             return "payton"
         else:
             return settings.SLACK_USERNAME_OVERRIDE
-        
+
     @staticmethod
     def add_to_slack_string(slack_string: str, addition: str, new_line=True):
         """add a string to a slack message string"""
@@ -37,9 +37,9 @@ class SlackClient:
             slack_username (str): user to send message to - username NOT email
         """
         try:
-            
+
             self.client.chat_postMessage(
-                channel=f"#botdev",
+                channel="#botdev",
                 text=f"<@{slack_username}>\n---------------\n{message}",
             )
             # TODO switch to dms once bot gets permissions
@@ -50,7 +50,9 @@ class SlackClient:
             print(f"ERROR (send_slack_direct_message): {e}")
             return False
 
-    def send_slack_message_to_channel(self, message: str, slack_channel=None, slack_mention=None):
+    def send_slack_message_to_channel(
+        self, message: str, slack_channel=None, slack_mention=None
+    ):
         """
         send slack message to a channel
 

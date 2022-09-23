@@ -110,6 +110,8 @@ ngrok subdomain
 ### create models to track ci status
 - need to store ci status for each pr to tell when it passes
     - when passes send message
+- get commit hash for messages
+    - maybe commit message as well
 - when ci passes
     - post to slack channel
     - send dm to author
