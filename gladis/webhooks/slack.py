@@ -7,6 +7,16 @@ class SlackClient:
     client = WebClient(token=settings.SLACK_API_KEY)
 
     @staticmethod
+    def get_slack_username(github_username):
+        """Get slack username from github username"""
+        if github_username == "dan1229":
+            return "danieln"
+        elif github_username == "turnage":
+            return "payton"
+        else:
+            return settings.SLACK_USERNAME_OVERRIDE
+        
+    @staticmethod
     def add_to_slack_string(slack_string: str, addition: str, new_line=True):
         """add a string to a slack message string"""
         if slack_string == "":
@@ -24,13 +34,17 @@ class SlackClient:
 
         Args:
             message (str): message to send
-            slack_user (str): user to send message to - username NOT email
+            slack_username (str): user to send message to - username NOT email
         """
-        
         try:
-            conversations = self.client.conversations_open(users=[slack_username])
-            print(conversations.__dict__)
-            conversations.send_message(channel=conversations.channel.id, text=message)
+            
+            self.client.chat_postMessage(
+                channel=f"#botdev",
+                text=f"<@{slack_username}>\n---------------\n{message}",
+            )
+            # TODO switch to dms once bot gets permissions
+            # conversations = self.client.conversations_open(users=[slack_username])
+            # conversations.send_message(channel=conversations.channel.id, text=message)
             return True
         except SlackApiError as e:
             print(f"ERROR (send_slack_direct_message): {e}")

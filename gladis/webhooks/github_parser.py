@@ -5,9 +5,9 @@ from core.helpers import str_to_bool
 
 class GithubParser:
     
-    def send_slack_message_to_user(self, slack_username, message, send_slack_message=True):
+    def send_slack_message_to_user(self, message, github_username, send_slack_message=True):
         if send_slack_message:
-            SlackClient().send_slack_direct_message(message, slack_username)
+            SlackClient().send_slack_direct_message(message, SlackClient.get_slack_username(github_username))
             
     def send_slack_message_to_channel(self, message, send_slack_message=True):
         if send_slack_message:

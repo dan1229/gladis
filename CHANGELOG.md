@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - add to github as well
 
 
+### user settings
+- what channels to post to
+- what events to post
+
+
 ### logging
 - where/how to log?
 - sentry?
@@ -71,6 +76,9 @@ ngrok subdomain
 ### django templates
 - add base template and clean up a bit
 
+### slack api permissions
+- get permissions for dms
+- make a new bot?
 
 -------------------------------------------------------
 ### TODO
@@ -106,12 +114,20 @@ ngrok subdomain
     - send dm to reviewers
     - mark pr as ready for review
 
+### link github usernames to slack usernames
+- function for now?
+- later on we can add a model for this
+    - SlackUser model
+        - user fk
+        - slack username string
+
 
 ### parse reviewers
 - parse reviewers
 - make function to dm people
-    - send dm to author
-    - send dm to reviewers
+    - send to bot dev channel for now
+    - tag author
+    - tag reviewers
 
 
 ### [0.0.1] - 2022-09-23
