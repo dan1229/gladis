@@ -131,6 +131,9 @@ class GithubParser:
             f"status: {payload.get('workflow_run', {}).get('status')}",
         )
         slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"conclusion: {payload.get('workflow_run', {}).get('conclusion')}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
             slack_message, f"url: {payload.get('workflow', {}).get('html_url')}"
         )
 
@@ -158,6 +161,9 @@ class GithubParser:
         slack_message = SlackClient.add_to_slack_string(
             slack_message,
             f"status: {payload.get('workflow_job', {}).get('status')}",
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"conclusion: {payload.get('workflow_run', {}).get('conclusion')}"
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message,
