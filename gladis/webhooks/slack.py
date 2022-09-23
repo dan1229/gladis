@@ -10,7 +10,9 @@ class SlackClient:
     @staticmethod
     def get_slack_username(github_username):
         """Get slack username from github username"""
-        user_settings_queryset = UserSettings.objects.filter(github_username=github_username)
+        user_settings_queryset = UserSettings.objects.filter(
+            github_username=github_username
+        )
         if user_settings_queryset.count() == 0:
             return None
         return user_settings_queryset.first().slack_username

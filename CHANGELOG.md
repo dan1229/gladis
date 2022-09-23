@@ -139,9 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - when ci fails
     - send dm to author
     - mark pr as not ready for review
-
-
-
+    
 
 #### parse reviewers
 - parse reviewers

@@ -26,6 +26,7 @@ class WebhookReceived(AbstractBaseModel):
     def get_property_action(self):
         return self.payload.get("action")
 
+
 #
 # GITHUB WEBHOOK RECEIVED ====================================== #
 #
