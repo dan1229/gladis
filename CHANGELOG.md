@@ -40,15 +40,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - slack lol
 
 
-#### make model for prs as well?
-- do we want to track prs?
-
-
-#### create models to track ci status
-- need to store ci status for each pr to tell when it passes
-    - when passes send message
-
-
 #### api app
 - app for api endpoints
 
@@ -141,12 +132,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - mark pr as not ready for review
     
 
-#### parse reviewers
-- parse reviewers
-- make function to dm people
-    - send to bot dev channel for now
-    - tag author
-    - tag reviewers
+#### create ci and pr models
+- model to track pr
+    - probably need to thread and emoji
+- need to store ci status for each pr to tell when it passes
+    - when passes send message
 
 
 ### [0.0.1] - 2022-09-23

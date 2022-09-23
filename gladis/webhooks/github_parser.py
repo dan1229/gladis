@@ -111,11 +111,14 @@ class GithubParser:
             slack_message = SlackClient.add_to_slack_string(
                 slack_message, f"repository link: {repository_link}"
             )
-
-        # TODO
-        # save reviewer and author info
-        # handle if switching base branch notification?
-
+        requested_reviewers = payload.get("pull_request", {}).get(
+            "requested_reviewers", []
+        )
+        if requested_reviewers and len(requested_reviewers > 0):
+            slack_message = SlackClient.add_to_slack_string(
+                slack_message, f"requested reviewers: {requested_reviewers}"
+            )
+            # TODO send slack message to requested reviewers
         self.send_slack_message_to_channel(
             slack_message, send_slack_message=send_slack_message
         )
