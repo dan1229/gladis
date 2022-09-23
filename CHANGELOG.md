@@ -22,50 +22,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -----
 
-### security
+#### security
 - add webhook secret
     - add to github as well
 
 
-### logging
+#### user settings
+- what channels to post to
+    - i.e., should some things (new pr) be posted to channel
+    - while others be sent via dms (ci failure/success)
+- what events to post
+
+
+#### logging
 - where/how to log?
 - sentry?
 - slack lol
 
-### make model for prs as well?
-- do we want to track prs?
 
-### api app
+#### api app
 - app for api endpoints
 
 
-### ci cd
-- python lint
-- python test
+#### cd
+- need to have a deployment env first
 
 
-### favicon!
+#### favicon!
 - add one!
 
 
-### TESTS
+#### emoji reactions
+- what should we react to?
+
+
+#### TESTS
 - webhooks
     - test webhook receivers against different event types
-- slack?
-    - TODO
+- slack class somehow
 - client app
     - 'home' view
+- model tests
+    - webhook received
+    - github webhook received
+- ci
 
-ngrok subdomain
-- need to attach to some subdomain since it assigns random urls
 
-
-### auth
+#### auth
 - oauth? - https://docs.github.com/en/developers/apps/building-oauth-apps
 
 
-### django templates
+#### django templates
 - add base template and clean up a bit
+
+
+#### slack api permissions
+- get permissions for dms
+- make a new bot?
 
 
 -------------------------------------------------------
@@ -73,45 +86,63 @@ ngrok subdomain
 ----
 ### 0.0.2
 
+#### documentation
+- how to run
+- how to signup/activate
+
+
+#### ngrok subdomain
+- need to attach to some subdomain since it assigns random urls
+- gladis.mercury.com
+
+
+#### threading
+- what would be appropriate to thread?
+
+
+#### switch to mercury github
+- switch to mercury github
+- figure out how to add other users
+
 
 ----
 ### 0.0.1
 
 
-### home page
+#### home page
 - add images!
 - add admin link
 
 
-### notify people of comments
-- if someone comments -> ping author
-- if author requests re review -> ping reviewers
+#### notify people of comments
+- if someone comments -> dm author
+- if author requests re review -> dm reviewers
 
 
-### post to slack when ci passes
-- post to slack channel
-- send dm to author
-- send dm to reviewers
-- mark pr as ready for review
+#### ci status updates
+- get commit hash for messages
+    - maybe commit message as well
+- when ci passes
+    - send dm to author
+    - send dm to reviewers
+    - mark pr as ready for review
+        - github update functionality? may be somewhat difficult
+- when ci fails
+    - send dm to author
+    - mark pr as not ready for review
+    
 
-
-### create models to track ci status
+#### create ci and pr models
+- model to track pr
+    - probably need to thread and emoji
 - need to store ci status for each pr to tell when it passes
     - when passes send message
 
 
-### parse reviewers
-- parse reviewers
-- make function to dm people
-    - slack.chat.post_message('@to_user',msg,username='@from_user')
-    - send dm to author
-    - send dm to reviewers
-
-
 ### [0.0.1] - 2022-09-23
 - Initial release!
-- Basic Slack integration
-- Basic GitHub webhook receiver
+- Basic Slack integration and message sending
+- Basic GitHub webhook receiver and parsing
 - Basic project setup
     - env file support
     - django apps

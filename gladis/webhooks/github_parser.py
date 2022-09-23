@@ -4,9 +4,24 @@ from core.helpers import str_to_bool
 
 
 class GithubParser:
-    def send_slack_message(self, send_slack_message, message):
+    def send_slack_message_to_user(
+        self, message, github_username, send_slack_message=True
+    ):
         if send_slack_message:
-            SlackClient().send_slack_message(message)
+            slack_username = SlackClient.get_slack_username(github_username)
+            if slack_username:
+                SlackClient().send_slack_direct_message(message, slack_username)
+            else:
+                # TODO no slack username found
+                # they either dont have an account with this service
+                # or their username is wrong
+                print(
+                    f"ERROR (send_slack_message_to_user): no slack username found: {github_username}"
+                )
+
+    def send_slack_message_to_channel(self, message, send_slack_message=True):
+        if send_slack_message:
+            SlackClient().send_slack_message_to_channel(message)
         else:
             print(message)
 
@@ -28,17 +43,28 @@ class GithubParser:
     def parse_pull_request(self, payload, send_slack_message=True):
         slack_message = ""
 
+        merged = payload.get("pull_request", {}).get("merged")
+        merged = str_to_bool(merged)
+
         action = payload.get("action")
         if action and action == "opened":
             slack_message = SlackClient.add_to_slack_string(
                 slack_message, "PR opened! :tada:"
             )
         elif action and action == "closed":
-            slack_message = SlackClient.add_to_slack_string(
-                slack_message, "PR closed! :tada:"
-            )
+            if merged:
+                self.send_slack_message_to_user(
+                    "Congrats! Your PR was merged! :tada:",
+                    payload.get("pull_request", {}).get("user", {}).get("login"),
+                )
+                slack_message = SlackClient.add_to_slack_string(
+                    slack_message, "PR merged! :merged_parrot:"
+                )
+            else:
+                slack_message = SlackClient.add_to_slack_string(
+                    slack_message, "PR closed! :sad:"
+                )
         SlackClient.add_to_slack_string(slack_message, "action: {action}")
-        # TODO handle draft statuses
 
         title = payload.get("pull_request", {}).get("title")
         if title:
@@ -85,18 +111,17 @@ class GithubParser:
             slack_message = SlackClient.add_to_slack_string(
                 slack_message, f"repository link: {repository_link}"
             )
-
-        merged = payload.get("pull_request", {}).get("merged")
-        merged = str_to_bool(merged)
-        slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"merged: {merged}"
+        requested_reviewers = payload.get("pull_request", {}).get(
+            "requested_reviewers", []
         )
-
-        # TODO
-        # save reviewer and author info
-        # handle if switching base branch notification?
-
-        self.send_slack_message(send_slack_message, slack_message)
+        if requested_reviewers and len(requested_reviewers > 0):
+            slack_message = SlackClient.add_to_slack_string(
+                slack_message, f"requested reviewers: {requested_reviewers}"
+            )
+            # TODO send slack message to requested reviewers
+        self.send_slack_message_to_channel(
+            slack_message, send_slack_message=send_slack_message
+        )
         return slack_message
 
     def parse_workflow_run(self, payload, send_slack_message=True):
@@ -117,15 +142,24 @@ class GithubParser:
         slack_message = SlackClient.add_to_slack_string(
             slack_message, "webhook type: workflow run"
         )
-        slack_message = SlackClient.add_to_slack_string(
-            slack_message,
-            f"status: {payload.get('workflow_run', {}).get('status')}",
-        )
+        status = payload.get("workflow_run", {}).get("status")
+        if status and status != "":
+            slack_message = SlackClient.add_to_slack_string(
+                slack_message,
+                f"status: {status}",
+            )
+        conclusion = payload.get("workflow_run", {}).get("conclusion")
+        if conclusion and conclusion != "":
+            slack_message = SlackClient.add_to_slack_string(
+                slack_message, f"conclusion: {conclusion}"
+            )
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"url: {payload.get('workflow', {}).get('html_url')}"
         )
 
-        self.send_slack_message(send_slack_message, slack_message)
+        self.send_slack_message_to_channel(
+            slack_message, send_slack_message=send_slack_message
+        )
         return slack_message
 
     def parse_workflow_job(self, payload, send_slack_message=True):
@@ -146,14 +180,23 @@ class GithubParser:
         slack_message = SlackClient.add_to_slack_string(
             slack_message, "webhook type: workflow job"
         )
-        slack_message = SlackClient.add_to_slack_string(
-            slack_message,
-            f"status: {payload.get('workflow_job', {}).get('status')}",
-        )
+        status = payload.get("workflow_job", {}).get("status")
+        if status and status != "":
+            slack_message = SlackClient.add_to_slack_string(
+                slack_message,
+                f"status: {status}",
+            )
+        conclusion = payload.get("workflow_job", {}).get("conclusion")
+        if conclusion and conclusion != "":
+            slack_message = SlackClient.add_to_slack_string(
+                slack_message, f"conclusion: {conclusion}"
+            )
         slack_message = SlackClient.add_to_slack_string(
             slack_message,
             f"url: {payload.get('workflow_job', {}).get('html_url')}",
         )
 
-        self.send_slack_message(send_slack_message, slack_message)
+        self.send_slack_message_to_channel(
+            slack_message, send_slack_message=send_slack_message
+        )
         return slack_message
