@@ -48,6 +48,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add one!
 
 
+### emoji reactions
+- what should we react to?
+
+
 ### TESTS
 - webhooks
     - test webhook receivers against different event types
@@ -81,6 +85,11 @@ ngrok subdomain
 ### home page
 - add images!
 - add admin link
+
+
+
+### threading
+- what would be appropriate to thread?
 
 
 ### notify people of comments

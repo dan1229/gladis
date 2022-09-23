@@ -28,13 +28,12 @@ class SlackClient:
         """
         
         try:
-            response = self.client.chat_postMessage(
-                channel=f"@{slack_username}",
-                text=f"{message}",
-            )
+            conversations = self.client.conversations_open(users=[slack_username])
+            print(conversations.__dict__)
+            conversations.send_message(channel=conversations.channel.id, text=message)
             return True
         except SlackApiError as e:
-            print(f"ERROR: {e}")
+            print(f"ERROR (send_slack_direct_message): {e}")
             return False
 
     def send_slack_message_to_channel(self, message: str, slack_channel=None, slack_mention=None):
@@ -59,5 +58,5 @@ class SlackClient:
             )
             return True
         except SlackApiError as e:
-            print(f"ERROR: {e}")
+            print(f"ERROR (send_slack_message_to_channel): {e}")
             return False
