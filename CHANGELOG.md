@@ -93,20 +93,18 @@ ngrok subdomain
 
 
 ### notify people of comments
-- if someone comments -> ping author
-- if author requests re review -> ping reviewers
-
-
-### post to slack when ci passes
-- post to slack channel
-- send dm to author
-- send dm to reviewers
-- mark pr as ready for review
+- if someone comments -> dm author
+- if author requests re review -> dm reviewers
 
 
 ### create models to track ci status
 - need to store ci status for each pr to tell when it passes
     - when passes send message
+- when ci passes
+    - post to slack channel
+    - send dm to author
+    - send dm to reviewers
+    - mark pr as ready for review
 
 
 ### parse reviewers
