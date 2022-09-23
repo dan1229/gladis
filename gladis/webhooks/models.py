@@ -95,6 +95,7 @@ class GithubPullRequest(AbstractBaseModel):
     github_id = models.CharField(max_length=255, help_text="The id of the workflow.")
 
     pr_number = models.IntegerField(help_text="The number of the PR.")
+    action = models.CharField(max_length=255, help_text="The action of the PR.")
     state = models.CharField(max_length=255, help_text="The state of the PR.")
 
     is_draft = models.BooleanField(default=False, help_text="Is the PR a draft?")
