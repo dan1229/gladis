@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from core.models import User
+from core.models import User, UserSettings
 from django.contrib.auth import get_user_model
+
+class UserSettingsInline(admin.StackedInline):
+    model = UserSettings
+    can_delete = False
+    fk_name = "user"
+
 
 
 class CustomUserAdmin(UserAdmin):
@@ -51,6 +57,7 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
+    inlines = (UserSettingsInline,)
     readonly_fields = ("id",)
 
 
