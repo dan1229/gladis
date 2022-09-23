@@ -160,6 +160,7 @@ class GithubParser:
         self.send_slack_message_to_channel(
             slack_message, send_slack_message=send_slack_message
         )
+        print(slack_message)
         return slack_message
 
     def parse_workflow_job(self, payload, send_slack_message=True):
