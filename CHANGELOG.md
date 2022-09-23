@@ -142,10 +142,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-#### link github usernames to slack usernames
-- ensure before sending messages (even processing the hook) that user has an accoutn and slack username
-
-
 
 #### parse reviewers
 - parse reviewers
