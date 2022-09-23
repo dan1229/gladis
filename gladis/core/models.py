@@ -88,3 +88,18 @@ class User(AbstractUser, AbstractBaseModel):
     class Meta:
         app_label = "core"
         ordering = ["email"]
+
+
+#
+# USER SETTINGS ================= #
+#
+class UserSettings(AbstractBaseModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="settings")
+    slack_username = models.CharField(max_length=255, null=False, blank=False)
+
+    def __str__(self):
+        return f"User Settings ({self.user})"
+
+    class Meta:
+        app_label = "core"
+        ordering = ["user"]

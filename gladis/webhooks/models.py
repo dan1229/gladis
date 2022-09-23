@@ -1,6 +1,7 @@
 from django.db import models
 
 from core.models import AbstractBaseModel
+from webhooks.slack import SlackClient
 from webhooks.github_parser import GithubParser
 
 
@@ -44,6 +45,20 @@ class GithubWebhookReceived(WebhookReceived):
         return (
             f"Github Webhook ({self.webhook_type} - {self.action}): {self.received_at}"
         )
+
+    #
+    # FUNCTIONS ====================================== #
+    #
+    def user_is_involved(self):
+        """Check if the user is involved in the event."""
+        user = self.payload.get("actor", {}).get("login")
+        if not user:
+            user = self.payload.get("triggering_actor", {}).get("login")
+        if not user:  # this is present on workflow_run/job and pull_request
+            user = self.payload.get("sender", {}).get("login")
+        if not user:
+            user = self.payload.get("pull_request", {}).get("user", {}).get("login")
+        return SlackClient.get_slack_username(user) is not None
 
     def process_github_webhook(self, send_slack_message=True):
         action = self.payload.get("action")
