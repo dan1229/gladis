@@ -39,8 +39,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - sentry?
 - slack lol
 
+
 ### make model for prs as well?
 - do we want to track prs?
+
+
+### create models to track ci status
+- need to store ci status for each pr to tell when it passes
+    - when passes send message
+
 
 ### api app
 - app for api endpoints
@@ -62,13 +69,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### TESTS
 - webhooks
     - test webhook receivers against different event types
-- slack?
-    - TODO
+- slack class somehow
 - client app
     - 'home' view
-
-ngrok subdomain
-- need to attach to some subdomain since it assigns random urls
+- model tests
+    - webhook received
+    - github webhook received
 
 
 ### auth
@@ -78,14 +84,31 @@ ngrok subdomain
 ### django templates
 - add base template and clean up a bit
 
+
 ### slack api permissions
 - get permissions for dms
 - make a new bot?
+
 
 -------------------------------------------------------
 ### TODO
 ----
 ### 0.0.2
+
+
+### ngrok subdomain
+- need to attach to some subdomain since it assigns random urls
+
+
+### threading
+- what would be appropriate to thread?
+
+
+### link github usernames to slack usernames
+- SlackUser model
+    - user fk
+    - slack username string
+- update function where we convert
 
 
 ----
@@ -97,33 +120,22 @@ ngrok subdomain
 - add admin link
 
 
-
-### threading
-- what would be appropriate to thread?
-
-
 ### notify people of comments
 - if someone comments -> dm author
 - if author requests re review -> dm reviewers
 
 
-### create models to track ci status
-- need to store ci status for each pr to tell when it passes
-    - when passes send message
+### ci status updates
 - get commit hash for messages
     - maybe commit message as well
 - when ci passes
-    - post to slack channel
     - send dm to author
     - send dm to reviewers
     - mark pr as ready for review
-
-### link github usernames to slack usernames
-- function for now?
-- later on we can add a model for this
-    - SlackUser model
-        - user fk
-        - slack username string
+        - github update functionality? may be somewhat difficult
+- when ci fails
+    - send dm to author
+    - mark pr as not ready for review
 
 
 ### parse reviewers
