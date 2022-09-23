@@ -86,6 +86,7 @@ class GithubWebhookReceived(WebhookReceived):
             GithubParser().parse_workflow_job(self.payload, send_slack_message)
             self.save()
 
+        print("Webhook Processed {}".format(self))
 
 #
 # GITHUB PULL REQUEST ====================================== #
