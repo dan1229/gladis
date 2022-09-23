@@ -29,6 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### user settings
 - what channels to post to
+    - i.e., should some things (new pr) be posted to channel
+    - while others be sent via dms (ci failure/success)
 - what events to post
 
 
