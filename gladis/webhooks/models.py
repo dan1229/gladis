@@ -1,6 +1,7 @@
 from django.db import models
 
 from core.models import AbstractBaseModel
+from webhooks.slack import SlackClient
 from webhooks.github_parser import GithubParser
 
 
@@ -26,18 +27,6 @@ class WebhookReceived(AbstractBaseModel):
         return self.payload.get("action")
 
 #
-# FUNCTIONS ====================================== #
-#
-def user_is_involved(self):
-    """
-    Check if the user is involved in the event.
-    """
-    
-    # TODO search for user in db
-    # maybe add function to manager?
-    return False
-
-#
 # GITHUB WEBHOOK RECEIVED ====================================== #
 #
 class GithubWebhookReceived(WebhookReceived):
@@ -55,6 +44,17 @@ class GithubWebhookReceived(WebhookReceived):
         return (
             f"Github Webhook ({self.webhook_type} - {self.action}): {self.received_at}"
         )
+
+    #
+    # FUNCTIONS ====================================== #
+    #
+    def user_is_involved(self):
+        """
+        Check if the user is involved in the event.
+        """
+        # TODO find all possible places where github username is used in self.payload
+        # SlackClient.get_slack_username()
+        return False
 
     def process_github_webhook(self, send_slack_message=True):
         action = self.payload.get("action")

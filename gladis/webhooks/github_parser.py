@@ -7,10 +7,17 @@ class GithubParser:
     def send_slack_message_to_user(
         self, message, github_username, send_slack_message=True
     ):
-        if send_slack_message:
-            SlackClient().send_slack_direct_message(
-                message, SlackClient.get_slack_username(github_username)
-            )
+        slack_username = SlackClient.get_slack_username(github_username)
+        if slack_username:
+            if send_slack_message:
+                SlackClient().send_slack_direct_message(
+                    message, slack_username
+                )
+        else:
+            # TODO no slack username found
+            # they either dont have an account with this service
+            # or their username is wrong
+            print(f"ERROR (send_slack_message_to_user): no slack username found: {github_username}")
 
     def send_slack_message_to_channel(self, message, send_slack_message=True):
         if send_slack_message:
