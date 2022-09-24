@@ -126,7 +126,7 @@ class GithubParser:
 
     def parse_workflow_run(self, payload, send_slack_message=True):
         slack_message = ""
-        print('parsing workflow run...')
+
         action = payload.get("action")
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"Workflow {action}"

@@ -83,7 +83,10 @@ class User(AbstractUser, AbstractBaseModel):
         return f"{self.first_name} {self.last_name}"
 
     def __str__(self):
-        return self.full_name
+        full_name = self.full_name
+        if full_name and full_name != ' ':
+            return full_name
+        return self.email
 
     class Meta:
         app_label = "core"
