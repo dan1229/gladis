@@ -4,7 +4,8 @@ from webhooks.models.webhooks import (
     GithubWebhookReceived,
 )
 from webhooks.models.github import (
-    GithubPullRequest, GithubWorkflow,
+    GithubPullRequest,
+    GithubWorkflow,
 )
 
 

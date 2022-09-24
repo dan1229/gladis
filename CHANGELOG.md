@@ -120,6 +120,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 #### ci status updates
+- make github object fields optional?
+    - or just wrap creatinos in try/excepts? this feels more incorrect since we probably do need those fields as up to date as possible
 - when ci passes
     - send dm to author
     - send dm to reviewers
