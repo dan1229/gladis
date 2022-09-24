@@ -1,5 +1,5 @@
 from webhooks.slack import SlackClient
-from webhooks.models import GithubPullRequest, GithubWorkflow
+from webhooks.models.github import GithubPullRequest, GithubWorkflow
 
 from core.helpers import str_to_bool
 
