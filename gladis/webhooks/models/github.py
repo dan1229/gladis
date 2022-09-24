@@ -29,7 +29,7 @@ class GithubPullRequest(AbstractBaseModel):
     reviewers = models.JSONField(default=None, null=True)
 
     class Meta:
-        ordering = ["datetime_created"]
+        ordering = ["-datetime_created"]
 
     def __str__(self):
         return f"PR #{self.pr_number}: {self.title} by {self.github_user}"
@@ -53,7 +53,7 @@ class GithubWorkflow(AbstractBaseModel):
     )
 
     class Meta:
-        ordering = ["datetime_created"]
+        ordering = ["-datetime_created"]
 
     def __str__(self):
         return f"Workflow #{self.github_id}: {self.name} - {self.conclusion}"
