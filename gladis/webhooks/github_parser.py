@@ -1,4 +1,5 @@
 from webhooks.slack import SlackClient
+from webhooks.models import GithubPullRequest, GithubWorkflow
 
 from core.helpers import str_to_bool
 
@@ -78,6 +79,10 @@ class GithubParser:
                 slack_message, f"pr number: {pr_number}"
             )
 
+        github_id = payload.get("pull_request", {}).get("id")
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"id: {github_id}"
+        )
         state = payload.get("pull_request", {}).get("state")
         if state:
             slack_message = SlackClient.add_to_slack_string(
@@ -122,6 +127,41 @@ class GithubParser:
         self.send_slack_message_to_channel(
             slack_message, send_slack_message=send_slack_message
         )
+        
+        # get or create pull request object
+        pull_requests = GithubPullRequest.objects.filter(github_id=github_id)
+        if pull_requests.count()  == 0:
+            GithubPullRequest.objects.create(
+                title=title,
+                github_id=github_id,
+                pr_number=pr_number,
+                action=action,
+                state=state,
+                is_draft=is_draft,
+                is_merged=merged,
+                github_user=github_user,
+                github_user_link=github_user_link,
+                repository=repository,
+                repository_link=repository_link,
+                reviewers=requested_reviewers,
+            )
+        else:
+            pull_requests.first().update(
+                title=title,
+                github_id=github_id,
+                pr_number=pr_number,
+                action=action,
+                state=state,
+                is_draft=is_draft,
+                is_merged=merged,
+                github_user=github_user,
+                github_user_link=github_user_link,
+                repository=repository,
+                repository_link=repository_link,
+                reviewers=requested_reviewers,
+            )
+            # TODO delete all other pr objects if there are any?
+        
         return slack_message
 
     def parse_workflow_run(self, payload, send_slack_message=True):
@@ -133,11 +173,13 @@ class GithubParser:
         )
         slack_message = self.add_workflow_status_emoji(slack_message, payload)
 
+        github_id = payload.get('workflow_run', {}).get('id')
         slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"id: {payload.get('workflow_run', {}).get('id')}"
+            slack_message, f"id: {github_id}"
         )
+        name = payload.get('workflow', {}).get('name')
         slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"name: {payload.get('workflow', {}).get('name')}"
+            slack_message, f"name: {name}"
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message, "webhook type: workflow run"
@@ -160,6 +202,29 @@ class GithubParser:
         self.send_slack_message_to_channel(
             slack_message, send_slack_message=send_slack_message
         )
+        
+        # create or update workflow run object
+        workflows = GithubWorkflow.objects.filter(github_id=github_id)
+        if workflows.count() == 0:
+            GithubWorkflow.objects.create(
+                title=name,
+                github_id=github_id,
+                action=action,
+                name=name,
+                status=status,
+                conclusion=conclusion,
+                pull_request_github_id=payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id"),
+            )
+        else:
+            workflows.first().update(
+                title=name,
+                github_id=github_id,
+                action=action,
+                name=name,
+                status=status,
+                conclusion=conclusion,
+                pull_request_github_id=payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id"),
+            )
         return slack_message
 
     def parse_workflow_job(self, payload, send_slack_message=True):
@@ -171,11 +236,13 @@ class GithubParser:
         )
         slack_message = self.add_workflow_status_emoji(slack_message, payload)
 
+        github_id = payload.get('workflow_job', {}).get('id')
         slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"id: {payload.get('workflow_job', {}).get('id')}"
+            slack_message, f"id: {github_id}"
         )
+        name = payload.get('workflow_job', {}).get('name')
         slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"name: {payload.get('workflow_job', {}).get('name')}"
+            slack_message, f"name: {name}"
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message, "webhook type: workflow job"
@@ -199,4 +266,27 @@ class GithubParser:
         self.send_slack_message_to_channel(
             slack_message, send_slack_message=send_slack_message
         )
+        
+        # create or update workflow job object
+        workflows = GithubWorkflow.objects.filter(github_id=github_id)
+        if workflows.count() == 0:
+            GithubWorkflow.objects.create(
+                title=name,
+                github_id=github_id,
+                action=action,
+                name=name,
+                status=status,
+                conclusion=conclusion,
+                pull_request_github_id=payload.get("workflow_job", {}).get("pull_requests", [{}])[0].get("id"),
+            )
+        else:
+            workflows.first().update(
+                title=name,
+                github_id=github_id,
+                action=action,
+                name=name,
+                status=status,
+                conclusion=conclusion,
+                pull_request_github_id=payload.get("workflow_job", {}).get("pull_requests", [{}])[0].get("id"),
+            )
         return slack_message

@@ -120,8 +120,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 #### ci status updates
-- create pull request and workflow objects in parser
-    - be sure to update objects based on `github_id`
 - when ci passes
     - send dm to author
     - send dm to reviewers

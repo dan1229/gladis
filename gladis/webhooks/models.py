@@ -124,7 +124,7 @@ class GithubPullRequest(AbstractBaseModel):
 # GITHUB WORKFLOW ====================================== #
 #
 class GithubWorkflow(AbstractBaseModel):
-    title = models.CharField(max_length=255, help_text="The title of the workflow.")
+    title = models.CharField(max_length=255, help_text="The title of the workflow.")  # this may be redundant, i.e., 'title' is the same as 'name'
     github_id = models.CharField(max_length=255, help_text="The ID of the workflow.")
 
     action = models.CharField(max_length=255, help_text="The action of the workflow.")
