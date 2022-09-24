@@ -1,5 +1,11 @@
 from django.contrib import admin
-from webhooks.models import WebhookReceived, GithubWebhookReceived, GithubPullRequest, GithubWorkflow
+from webhooks.models.webhooks import (
+    WebhookReceived,
+    GithubWebhookReceived,
+)
+from webhooks.models.github import (
+    GithubPullRequest, GithubWorkflow,
+)
 
 
 class WebhookReceivedAdmin(admin.ModelAdmin):
@@ -37,6 +43,7 @@ class GithubWebhookReceivedAdmin(admin.ModelAdmin):
     readonly_fields = ("id",)
     list_per_page = 100
 
+
 class GithubPullRequestAdmin(admin.ModelAdmin):
     list_display = (
         "title",
@@ -61,6 +68,7 @@ class GithubPullRequestAdmin(admin.ModelAdmin):
     readonly_fields = ("id",)
     list_per_page = 100
 
+
 class GithubWorkflowAdmin(admin.ModelAdmin):
     list_display = (
         "title",
@@ -84,8 +92,8 @@ class GithubWorkflowAdmin(admin.ModelAdmin):
     )
     readonly_fields = ("id",)
     list_per_page = 100
-    
-    
+
+
 admin.site.register(WebhookReceived, WebhookReceivedAdmin)
 admin.site.register(GithubWebhookReceived, GithubWebhookReceivedAdmin)
 admin.site.register(GithubPullRequest, GithubPullRequestAdmin)

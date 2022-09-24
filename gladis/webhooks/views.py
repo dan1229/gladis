@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 
-from webhooks.models import GithubWebhookReceived
+from webhooks.models.webhooks import GithubWebhookReceived
 
 
 @csrf_exempt

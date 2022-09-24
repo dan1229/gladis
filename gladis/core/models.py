@@ -84,7 +84,7 @@ class User(AbstractUser, AbstractBaseModel):
 
     def __str__(self):
         full_name = self.full_name
-        if full_name and full_name != ' ':
+        if full_name and full_name != " ":
             return full_name
         return self.email
 

@@ -127,10 +127,10 @@ class GithubParser:
         self.send_slack_message_to_channel(
             slack_message, send_slack_message=send_slack_message
         )
-        
+
         # get or create pull request object
         pull_requests = GithubPullRequest.objects.filter(github_id=github_id)
-        if pull_requests.count()  == 0:
+        if pull_requests.count() == 0:
             GithubPullRequest.objects.create(
                 title=title,
                 github_id=github_id,
@@ -161,7 +161,7 @@ class GithubParser:
                 reviewers=requested_reviewers,
             )
             # TODO delete all other pr objects if there are any?
-        
+
         return slack_message
 
     def parse_workflow_run(self, payload, send_slack_message=True):
@@ -173,14 +173,12 @@ class GithubParser:
         )
         slack_message = self.add_workflow_status_emoji(slack_message, payload)
 
-        github_id = payload.get('workflow_run', {}).get('id')
+        github_id = payload.get("workflow_run", {}).get("id")
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"id: {github_id}"
         )
-        name = payload.get('workflow', {}).get('name')
-        slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"name: {name}"
-        )
+        name = payload.get("workflow", {}).get("name")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"name: {name}")
         slack_message = SlackClient.add_to_slack_string(
             slack_message, "webhook type: workflow run"
         )
@@ -202,7 +200,7 @@ class GithubParser:
         self.send_slack_message_to_channel(
             slack_message, send_slack_message=send_slack_message
         )
-        
+
         # create or update workflow run object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
         if workflows.count() == 0:
@@ -213,7 +211,9 @@ class GithubParser:
                 name=name,
                 status=status,
                 conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id"),
+                pull_request_github_id=payload.get("workflow_run", {})
+                .get("pull_requests", [{}])[0]
+                .get("id"),
             )
         else:
             workflows.first().update(
@@ -223,7 +223,9 @@ class GithubParser:
                 name=name,
                 status=status,
                 conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id"),
+                pull_request_github_id=payload.get("workflow_run", {})
+                .get("pull_requests", [{}])[0]
+                .get("id"),
             )
         return slack_message
 
@@ -236,14 +238,12 @@ class GithubParser:
         )
         slack_message = self.add_workflow_status_emoji(slack_message, payload)
 
-        github_id = payload.get('workflow_job', {}).get('id')
+        github_id = payload.get("workflow_job", {}).get("id")
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"id: {github_id}"
         )
-        name = payload.get('workflow_job', {}).get('name')
-        slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"name: {name}"
-        )
+        name = payload.get("workflow_job", {}).get("name")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"name: {name}")
         slack_message = SlackClient.add_to_slack_string(
             slack_message, "webhook type: workflow job"
         )
@@ -266,7 +266,7 @@ class GithubParser:
         self.send_slack_message_to_channel(
             slack_message, send_slack_message=send_slack_message
         )
-        
+
         # create or update workflow job object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
         if workflows.count() == 0:
@@ -277,7 +277,9 @@ class GithubParser:
                 name=name,
                 status=status,
                 conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_job", {}).get("pull_requests", [{}])[0].get("id"),
+                pull_request_github_id=payload.get("workflow_job", {})
+                .get("pull_requests", [{}])[0]
+                .get("id"),
             )
         else:
             workflows.first().update(
@@ -287,6 +289,8 @@ class GithubParser:
                 name=name,
                 status=status,
                 conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_job", {}).get("pull_requests", [{}])[0].get("id"),
+                pull_request_github_id=payload.get("workflow_job", {})
+                .get("pull_requests", [{}])[0]
+                .get("id"),
             )
         return slack_message
