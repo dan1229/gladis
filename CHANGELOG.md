@@ -120,10 +120,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 #### ci status updates
-- 
-- move messaging logic out of parser
-    - put into signals
-- 
+- make new migration
+    - remake migration 6
+- populate new urls fields
 - when ci passes
     - send dm to author
     - send dm to reviewers
