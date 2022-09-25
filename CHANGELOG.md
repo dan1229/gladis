@@ -120,7 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 #### ci status updates
-- fix update syntax in github parser
+- 
 - move messaging logic out of parser
     - put into signals
 - 

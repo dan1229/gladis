@@ -146,21 +146,20 @@ class GithubParser:
                 reviewers=requested_reviewers,
             )
         else:
-            pull_requests.first().update(
-                title=title,
-                github_id=github_id,
-                pr_number=pr_number,
-                action=action,
-                state=state,
-                is_draft=is_draft,
-                is_merged=merged,
-                github_user=github_user,
-                github_user_link=github_user_link,
-                repository=repository,
-                repository_link=repository_link,
-                reviewers=requested_reviewers,
-            )
+            pull_request = pull_requests.first()
             # TODO delete all other pr objects if there are any?
+            pull_request.title = title
+            pull_request.github_id=github_id
+            pull_request.pr_number=pr_number
+            pull_request.action=action
+            pull_request.state=state
+            pull_request.is_draft=is_draft
+            pull_request.is_merged=merged
+            pull_request.github_user=github_user
+            pull_request.github_user_link=github_user_link
+            pull_request.repository=repository
+            pull_request.repository_link=repository_link
+            pull_request.reviewers=requested_reviewers
 
         return slack_message
 
@@ -216,17 +215,14 @@ class GithubParser:
                 .get("id"),
             )
         else:
-            workflows.first().update(
-                title=name,
-                github_id=github_id,
-                action=action,
-                name=name,
-                status=status,
-                conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_run", {})
-                .get("pull_requests", [{}])[0]
-                .get("id"),
-            )
+            workflow = workflows.first()
+            workflow.title=name
+            workflow.github_id=github_id
+            workflow.action=action
+            workflow.name=name
+            workflow.status=status
+            workflow.conclusion=conclusion
+            workflow.pull_request_github_id=payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
         return slack_message
 
     def parse_workflow_job(self, payload, send_slack_message=True):
@@ -282,15 +278,12 @@ class GithubParser:
                 .get("id"),
             )
         else:
-            workflows.first().update(
-                title=name,
-                github_id=github_id,
-                action=action,
-                name=name,
-                status=status,
-                conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_job", {})
-                .get("pull_requests", [{}])[0]
-                .get("id"),
-            )
+            workflow = workflows.first()
+            workflow.title=name
+            workflow.github_id=github_id
+            workflow.action=action
+            workflow.name=name
+            workflow.status=status
+            workflow.conclusion=conclusion
+            workflow.pull_request_github_id=payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
         return slack_message
