@@ -67,7 +67,9 @@ class GithubParser:
         status = payload.get("workflow_run", {}).get("status")
         conclusion = payload.get("workflow_run", {}).get("conclusion")
         workflow_url = payload.get("workflow", {}).get("html_url")
-        pull_request_url = payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
+        pull_request_url = (
+            payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
+        )
 
         # create or update workflow run object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
@@ -97,7 +99,7 @@ class GithubParser:
                 payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
             )
             workflow.workflow_url = workflow_url
-            workflow.pull_request_url=pull_request_url
+            workflow.pull_request_url = pull_request_url
 
     def parse_workflow_job(self, payload):
         action = payload.get("action")
@@ -106,7 +108,9 @@ class GithubParser:
         status = payload.get("workflow_run", {}).get("status")
         conclusion = payload.get("workflow_run", {}).get("conclusion")
         workflow_url = payload.get("workflow", {}).get("html_url")
-        pull_request_url = payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
+        pull_request_url = (
+            payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
+        )
 
         # create or update workflow job object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
@@ -136,4 +140,4 @@ class GithubParser:
                 payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
             )
             workflow.workflow_url = workflow_url
-            workflow.pull_request_url=pull_request_url
+            workflow.pull_request_url = pull_request_url
