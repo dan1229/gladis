@@ -1,9 +1,7 @@
 from webhooks.models.github import GithubPullRequest, GithubWorkflow
 
 
-
 class GithubParser:
-
 
     #
     # PARSING FUNCTIONS
@@ -25,6 +23,7 @@ class GithubParser:
         requested_reviewers = payload.get("pull_request", {}).get(
             "requested_reviewers", []
         )
+        pull_request_url = payload.get("pull_request", {}).get("html_url")
 
         # get or create pull request object
         pull_requests = GithubPullRequest.objects.filter(github_id=github_id)
@@ -42,6 +41,7 @@ class GithubParser:
                 repository=repository,
                 repository_link=repository_link,
                 reviewers=requested_reviewers,
+                pull_request_url=pull_request_url,
             )
         else:
             pull_request = pull_requests.first()
@@ -58,8 +58,7 @@ class GithubParser:
             pull_request.repository = repository
             pull_request.repository_link = repository_link
             pull_request.reviewers = requested_reviewers
-
-    
+            pull_request.pull_request_url = pull_request_url
 
     def parse_workflow_run(self, payload):
         action = payload.get("action")
@@ -68,6 +67,7 @@ class GithubParser:
         status = payload.get("workflow_run", {}).get("status")
         conclusion = payload.get("workflow_run", {}).get("conclusion")
         workflow_url = payload.get("workflow", {}).get("html_url")
+        pull_request_url = payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
 
         # create or update workflow run object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
@@ -83,6 +83,7 @@ class GithubParser:
                 .get("pull_requests", [{}])[0]
                 .get("id"),
                 workflow_url=workflow_url,
+                pull_request_url=pull_request_url,
             )
         else:
             workflow = workflows.first()
@@ -95,16 +96,18 @@ class GithubParser:
             workflow.pull_request_github_id = (
                 payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
             )
-            workflow_url = workflow_url
+            workflow.workflow_url = workflow_url
+            workflow.pull_request_url=pull_request_url
 
-    def parse_workflow_job(self, payload, send_slack_message=True):
+    def parse_workflow_job(self, payload):
         action = payload.get("action")
         github_id = payload.get("workflow_run", {}).get("id")
         name = payload.get("workflow", {}).get("name")
         status = payload.get("workflow_run", {}).get("status")
         conclusion = payload.get("workflow_run", {}).get("conclusion")
         workflow_url = payload.get("workflow", {}).get("html_url")
-        
+        pull_request_url = payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
+
         # create or update workflow job object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
         if workflows.count() == 0:
@@ -118,6 +121,8 @@ class GithubParser:
                 pull_request_github_id=payload.get("workflow_job", {})
                 .get("pull_requests", [{}])[0]
                 .get("id"),
+                workflow_url=workflow_url,
+                pull_request_url=pull_request_url,
             )
         else:
             workflow = workflows.first()
@@ -130,3 +135,5 @@ class GithubParser:
             workflow.pull_request_github_id = (
                 payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
             )
+            workflow.workflow_url = workflow_url
+            workflow.pull_request_url=pull_request_url

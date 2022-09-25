@@ -66,9 +66,8 @@ def github_pull_request_handle_messages(sender, instance, created, **kwargs):
     #     slack_message = SlackClient.add_to_slack_string(
     #         slack_message, f"requested reviewers: {requested_reviewers}"
     #     )
-    
-    
-    
+
+
 @receiver(post_save, sender=GithubWorkflow)
 def github_workflow_handle_messages(sender, instance, created, **kwargs):
     pass
@@ -98,8 +97,7 @@ def github_workflow_handle_messages(sender, instance, created, **kwargs):
     # slack_message = SlackClient.add_to_slack_string(
     #     slack_message, f"url: {"
     # )
-    
-    
+
 
 def add_workflow_status_emoji(slack_message, payload):
     action = payload.get("action")
