@@ -72,7 +72,6 @@ class GithubPullRequestAdmin(admin.ModelAdmin):
 
 class GithubWorkflowAdmin(admin.ModelAdmin):
     list_display = (
-        "title",
         "github_id",
         "name",
         "action",
@@ -82,7 +81,6 @@ class GithubWorkflowAdmin(admin.ModelAdmin):
         "datetime_created",
     )
     search_fields = (
-        "title",
         "github_id",
         "name",
         "action",
