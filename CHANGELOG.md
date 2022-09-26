@@ -56,6 +56,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - what should we react to?
 
 
+#### github api
+- mark pr as ready for review
+    - github update functionality? may be somewhat difficult
+- what other kind of functionality would we want?
+
+
 #### TESTS
 - webhooks
     - test webhook receivers against different event types
@@ -125,8 +131,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - when ci passes
     - send dm to author
     - send dm to reviewers
-    - mark pr as ready for review
-        - github update functionality? may be somewhat difficult
 - when ci fails
     - send dm to author
     - mark pr as not ready for review
