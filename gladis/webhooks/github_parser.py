@@ -67,6 +67,8 @@ class GithubParser:
         name = payload.get("workflow", {}).get("name")
         status = payload.get("workflow_run", {}).get("status")
         conclusion = payload.get("workflow_run", {}).get("conclusion")
+        github_user = payload.get("sender", {}).get("login")
+        github_user_link = payload.get("sender", {}).get("html_url")
         workflow_url = payload.get("workflow", {}).get("html_url")
         pull_requests = payload.get("workflow_run", {}).get("pull_requests")
         pull_request_url = None
@@ -84,6 +86,8 @@ class GithubParser:
                 name=name,
                 status=status,
                 conclusion=conclusion,
+                github_user=github_user,
+                github_user_link=github_user_link,
                 pull_request_github_id=pull_request_github_id,
                 workflow_url=workflow_url,
                 pull_request_url=pull_request_url,
@@ -95,6 +99,8 @@ class GithubParser:
             workflow.name = name
             workflow.status = status
             workflow.conclusion = conclusion
+            workflow.github_user = github_user
+            workflow.github_user_link = github_user_link
             workflow.pull_request_github_id = pull_request_github_id
             workflow.workflow_url = workflow_url
             workflow.pull_request_url = pull_request_url
@@ -106,6 +112,8 @@ class GithubParser:
         name = payload.get("workflow", {}).get("name")
         status = payload.get("workflow_run", {}).get("status")
         conclusion = payload.get("workflow_job", {}).get("conclusion")
+        github_user = payload.get("sender", {}).get("login")
+        github_user_link = payload.get("sender", {}).get("html_url")
         workflow_url = payload.get("workflow", {}).get("html_url")
         pull_requests = payload.get("workflow_job", {}).get("pull_requests")
         pull_request_url = None
@@ -123,6 +131,8 @@ class GithubParser:
                 name=name,
                 status=status,
                 conclusion=conclusion,
+                github_user=github_user,
+                github_user_link=github_user_link,
                 pull_request_github_id=pull_request_github_id,
                 workflow_url=workflow_url,
                 pull_request_url=pull_request_url,
@@ -134,6 +144,8 @@ class GithubParser:
             workflow.name = name
             workflow.status = status
             workflow.conclusion = conclusion
+            workflow.github_user = github_user
+            workflow.github_user_link = github_user_link
             workflow.pull_request_github_id = pull_request_github_id
             workflow.workflow_url = workflow_url
             workflow.pull_request_url = pull_request_url
