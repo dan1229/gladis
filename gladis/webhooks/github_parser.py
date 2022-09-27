@@ -103,14 +103,14 @@ class GithubParser:
 
     def parse_workflow_job(self, payload):
         action = payload.get("action")
-        github_id = payload.get("workflow_run", {}).get("id")
+        github_id = payload.get("workflow_job", {}).get("id")
         name = payload.get("workflow", {}).get("name")
         status = payload.get("workflow_run", {}).get("status")
-        conclusion = payload.get("workflow_run", {}).get("conclusion")
+        conclusion = payload.get("workflow_job", {}).get("conclusion")
         workflow_url = payload.get("workflow", {}).get("html_url")
-        pull_request_url = (
-            payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
-        )
+        pull_requests = payload.get("workflow_job", {}).get("pull_requests")
+        if pull_requests != None and len(pull_requests) > 0:
+            pull_request_url = pull_requests[0].get("url")
 
         # create or update workflow job object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
