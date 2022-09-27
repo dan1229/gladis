@@ -71,7 +71,8 @@ def github_pull_request_handle_messages(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=GithubWorkflow)
 def github_workflow_handle_messages(sender, instance, created, **kwargs):
-    pass
+    send_message_ci_passing(instance)
+    send_message_ci_failing(instance)
     # TODO send messages
     # slack_message = SlackClient.add_to_slack_string(
     #     slack_message, f"Workflow {action}"
@@ -103,12 +104,9 @@ def github_workflow_handle_messages(sender, instance, created, **kwargs):
 # MESSAGING FUNCTIONS
 #
 
-
-# TODO
-# - ci passing
-#   - send to author
-#   - send to reviewers
 def send_message_ci_passing(workflow):
+    print(workflow)
+    print(workflow.status, workflow.conclusion)
     if workflow.status == "completed" and workflow.conclusion == "success":
         slack_message = ""
         slack_message = SlackClient.add_to_slack_string(slack_message, "CI passing! :tada:")
