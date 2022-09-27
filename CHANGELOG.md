@@ -15,6 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Released]
 
 
+### [0.0.1] - 2022-09-23
+- Initial release!
+- Basic Slack integration and message sending
+- Basic GitHub webhook receiver and parsing
+- Basic project setup
+    - env file support
+    - django apps
+    - basic models
+- Client app, webhook app and core app
+- Basic CI
 
 -------------------------------------------------------
 
@@ -91,7 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -------------------------------------------------------
 ### TODO
 ----
-### 0.0.2
+### 0.0.3
 
 #### ngrok subdomain
 - need to attach to some subdomain since it assigns random urls
@@ -112,7 +122,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ----
-### 0.0.1
+### 0.0.2
 
 
 
@@ -134,16 +144,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-### [0.0.1] - 2022-09-23
-- Initial release!
-- Basic Slack integration and message sending
-- Basic GitHub webhook receiver and parsing
-- Basic project setup
-    - env file support
-    - django apps
-    - basic models
-- Client app, webhook app and core app
-- Basic CI
+### [0.0.2] - 2022-09-27
+#### TODO
+- Added to mercury github
+- Documentation improvements
+- Home page improvements
+
 
 -------------------------------------------------------
 
