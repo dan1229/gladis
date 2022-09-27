@@ -19,6 +19,6 @@ def github_webhook(request):
         sender="github",
         payload=payload,
     )
-    if webhook.user_is_involved():
+    if webhook.gladis_user_is_involved():
         webhook.process_github_webhook()
     return HttpResponse("Message received okay.", content_type="text/plain")
