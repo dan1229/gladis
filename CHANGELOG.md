@@ -117,10 +117,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add admin link
 
 
-#### messaging functions in signals.py
-- view comments and fill out
-
-
 #### documentation
 - readme
     - how to run
@@ -131,6 +127,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### switch to mercury github
 - switch to mercury github
 - figure out how to add other users
+
+#### messaging functions in signals.py
+- view comments and fill out
+- add try/catch to parser?
+
 
 
 ### [0.0.1] - 2022-09-23
