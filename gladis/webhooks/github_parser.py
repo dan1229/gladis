@@ -109,8 +109,13 @@ class GithubParser:
         conclusion = payload.get("workflow_job", {}).get("conclusion")
         workflow_url = payload.get("workflow", {}).get("html_url")
         pull_requests = payload.get("workflow_job", {}).get("pull_requests")
+        print("WORKFLOW JOB PAYLOAD: ", payload.get("workflow_job", {}))
+        pull_request_url = None
+        pull_request_github_id = None
         if pull_requests != None and len(pull_requests) > 0:
             pull_request_url = pull_requests[0].get("url")
+            pull_request_github_id = pull_requests[0].get("id")
+            
 
         # create or update workflow job object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
@@ -122,9 +127,7 @@ class GithubParser:
                 name=name,
                 status=status,
                 conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_job", {})
-                .get("pull_requests", [{}])[0]
-                .get("id"),
+                pull_request_github_id=pull_request_github_id
                 workflow_url=workflow_url,
                 pull_request_url=pull_request_url,
             )
