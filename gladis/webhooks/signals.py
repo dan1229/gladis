@@ -8,7 +8,7 @@ from webhooks.slack import SlackClient
 
 @receiver(post_save, sender=GithubPullRequest)
 def github_pull_request_handle_messages(sender, instance, created, **kwargs):
-    send_message_pr_opened(instance, created)
+    send_message_pr_opened(instance)
     send_message_pr_merged(instance)
     send_message_pr_closed(instance)
 
@@ -119,11 +119,8 @@ def send_message_ci_failing(workflow):
             SlackClient().send_slack_direct_message(slack_message, slack_author_username)
 
 
-def send_message_pr_opened(pull_request, created):
-    # TODO basing this off of 'created' wont reflect if the PR was opened
-    # as a draft, as a 'regular' PR, changed to a regular PR, etc.
-    # Need to find a way to determine change of PR state
-    if created:
+def send_message_pr_opened(pull_request):
+    if pull_request.action == "opened":
         slack_message = ""
         slack_message = SlackClient.add_to_slack_string(
             slack_message, "PR opened! :open_hands:"
