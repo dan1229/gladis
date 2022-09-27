@@ -71,9 +71,7 @@ def github_pull_request_handle_messages(sender, instance, created, **kwargs):
 @receiver(post_save, sender=GithubWorkflow)
 def github_workflow_handle_messages(sender, instance, created, **kwargs):
     pass
-    # TODO - distinguish between 'workflow_run' and 'workflow_job' events
     # TODO send messages
-
     # slack_message = SlackClient.add_to_slack_string(
     #     slack_message, f"Workflow {action}"
     # )
@@ -82,6 +80,7 @@ def github_workflow_handle_messages(sender, instance, created, **kwargs):
     #     slack_message, f"id: {github_id}"
     # )
     # slack_message = SlackClient.add_to_slack_string(slack_message, f"name: {name}")
+    # TODO - distinguish between 'workflow_run' and 'workflow_job' events via payload
     # slack_message = SlackClient.add_to_slack_string(
     #     slack_message, "webhook type: workflow run"
     # )
