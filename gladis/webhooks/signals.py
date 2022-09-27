@@ -103,8 +103,6 @@ def github_workflow_handle_messages(sender, instance, created, **kwargs):
 #
 # MESSAGING FUNCTIONS
 #
-
-
 def send_message_ci_passing(workflow):
     print(workflow)
     print(workflow.status, workflow.conclusion)

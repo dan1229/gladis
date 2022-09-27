@@ -59,6 +59,7 @@ class GithubParser:
             pull_request.repository_link = repository_link
             pull_request.reviewers = requested_reviewers
             pull_request.pull_request_url = pull_request_url
+            pull_request.save()
 
     def parse_workflow_run(self, payload):
         action = payload.get("action")
@@ -97,6 +98,7 @@ class GithubParser:
             workflow.pull_request_github_id = pull_request_github_id
             workflow.workflow_url = workflow_url
             workflow.pull_request_url = pull_request_url
+            workflow.save()
 
     def parse_workflow_job(self, payload):
         action = payload.get("action")
@@ -135,3 +137,4 @@ class GithubParser:
             workflow.pull_request_github_id = pull_request_github_id
             workflow.workflow_url = workflow_url
             workflow.pull_request_url = pull_request_url
+            workflow.save()
