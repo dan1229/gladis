@@ -127,7 +127,7 @@ class GithubParser:
                 name=name,
                 status=status,
                 conclusion=conclusion,
-                pull_request_github_id=pull_request_github_id
+                pull_request_github_id=pull_request_github_id,
                 workflow_url=workflow_url,
                 pull_request_url=pull_request_url,
             )
