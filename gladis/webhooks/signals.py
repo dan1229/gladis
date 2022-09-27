@@ -58,7 +58,8 @@ def send_message_ci_passing(workflow):
         )
 
         slack_author_username = SlackClient.get_slack_username(workflow.github_user)
-        SlackClient().send_slack_direct_message(slack_message, slack_author_username)
+        if slack_author_username:
+            SlackClient().send_slack_direct_message(slack_message, slack_author_username)
 
         try:
             pull_request = GithubPullRequest.objects.get(
@@ -68,9 +69,10 @@ def send_message_ci_passing(workflow):
                 slack_reviewer_username = (
                     SlackClient.get_slack_username_from_github_username(reviewer)
                 )
-                SlackClient().send_slack_direct_message(
-                    slack_message, slack_reviewer_username
-                )
+                if slack_reviewer_username:
+                    SlackClient().send_slack_direct_message(
+                        slack_message, slack_reviewer_username
+                    )
         except GithubPullRequest.DoesNotExist:
             print(
                 f"ERROR: send_message_ci_passing: no pull request found. Workflow ID: {workflow.id}"
@@ -113,7 +115,8 @@ def send_message_ci_failing(workflow):
         )
 
         slack_author_username = SlackClient.get_slack_username(workflow.github_user)
-        SlackClient().send_slack_direct_message(slack_message, slack_author_username)
+        if slack_author_username:
+            SlackClient().send_slack_direct_message(slack_message, slack_author_username)
 
 
 def send_message_pr_opened(pull_request, created):
@@ -142,7 +145,8 @@ def send_message_pr_opened(pull_request, created):
         )
 
         slack_author_username = SlackClient.get_slack_username(pull_request.github_user)
-        SlackClient().send_slack_direct_message(slack_message, slack_author_username)
+        if slack_author_username:
+            SlackClient().send_slack_direct_message(slack_message, slack_author_username)
 
 
 def send_message_pr_merged(pull_request):
@@ -168,15 +172,17 @@ def send_message_pr_merged(pull_request):
         )
 
         slack_author_username = SlackClient.get_slack_username(pull_request.github_user)
-        SlackClient().send_slack_direct_message(slack_message, slack_author_username)
-
+        if slack_author_username:
+            SlackClient().send_slack_direct_message(slack_message, slack_author_username)
+            
         for reviewer in pull_request.requested_reviewers:
             slack_reviewer_username = (
                 SlackClient.get_slack_username_from_github_username(reviewer)
             )
-            SlackClient().send_slack_direct_message(
-                slack_message, slack_reviewer_username
-            )
+            if slack_reviewer_username:
+                SlackClient().send_slack_direct_message(
+                    slack_message, slack_reviewer_username
+                )
 
 
 def send_message_pr_closed(pull_request):

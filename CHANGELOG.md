@@ -145,6 +145,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ### [0.0.2] - 2022-09-27
+- Only send messages to users who are signed up for GLADIS
 #### TODO
 - Added to mercury github
 - Documentation improvements
