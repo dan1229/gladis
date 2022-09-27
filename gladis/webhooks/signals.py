@@ -47,7 +47,7 @@ def send_message_ci_passing(workflow):
             slack_message, f"repository link: {workflow.repository_link}"
         )
         slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"workflow link: {workflow.url}"
+            slack_message, f"workflow link: {workflow.workflow_url}"
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"workflow id: {workflow.github_id}"
