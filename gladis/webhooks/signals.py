@@ -21,8 +21,6 @@ def github_workflow_handle_messages(sender, instance, created, **kwargs):
 # MESSAGING FUNCTIONS
 #
 def send_message_ci_passing(workflow):
-    print(workflow)
-    print(workflow.status, workflow.conclusion)
     if workflow.status == "completed" and workflow.conclusion == "success":
         slack_message = ""
         slack_message = SlackClient.add_to_slack_string(
@@ -39,9 +37,6 @@ def send_message_ci_passing(workflow):
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message, "-------------------"
-        )
-        slack_message = SlackClient.add_to_slack_string(
-            slack_message, f"repository: {workflow.repository}"
         )
         slack_message = SlackClient.add_to_slack_string(
             slack_message, f"repository link: {workflow.repository_link}"
@@ -82,8 +77,43 @@ def send_message_ci_passing(workflow):
 # TODO
 # - ci failing
 #   - send to author
-def send_message_ci_failing(instance):
-    pass
+def send_message_ci_failing(workflow):
+    if workflow.status == "completed" and workflow.conclusion == "failure":
+        slack_message = ""
+        slack_message = SlackClient.add_to_slack_string(slack_message, "CI failed! You suck! :feelsbadman:")
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, "-------------------"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"workflow name: {workflow.name}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"author: {workflow.github_user}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, "-------------------"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"repository link: {workflow.repository_link}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"workflow link: {workflow.workflow_url}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"workflow id: {workflow.github_id}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"workflow status: {workflow.status}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"workflow conclusion: {workflow.conclusion}"
+        )
+
+        slack_author_username = SlackClient.get_slack_username(workflow.github_user)
+        SlackClient().send_slack_direct_message(slack_message, slack_author_username)
+
+
+
 
 
 # TODO
