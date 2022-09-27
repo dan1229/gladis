@@ -99,6 +99,47 @@ def github_workflow_handle_messages(sender, instance, created, **kwargs):
     # )
 
 
+#
+# MESSAGING FUNCTIONS
+#
+
+
+# TODO
+# - ci passing
+#   - send to author
+#   - send to reviewers
+def send_message_ci_passing(instance):
+    pass
+
+
+# TODO
+# - ci failing
+#   - send to author
+def send_message_ci_failing(instance):
+    pass
+
+
+# TODO
+# - pr opened
+#   - send to author
+def send_message_pr_opened(instance):
+    pass
+
+
+# TODO
+# - pr merged
+#   - send to author
+#   - send to reviewers
+def send_message_pr_merged(instance):
+    pass
+
+
+# TODO
+# - pr closed
+def send_message_pr_closed(instance):
+    pass
+
+
 def add_workflow_status_emoji(slack_message, payload):
     action = payload.get("action")
     if action and action == "completed":

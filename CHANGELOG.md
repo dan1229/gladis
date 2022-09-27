@@ -121,20 +121,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 0.0.1
 
 
+
 #### home page
 - add images!
 - add admin link
 
 
+#### messaging functions in signals.py
+- view comments and fill out
 
-#### ci status updates
-- when ci passes
-    - send dm to author
-    - send dm to reviewers
-- when ci fails
-    - send dm to author
-    - mark pr as not ready for review
-    
 
 
 ### [0.0.1] - 2022-09-23
