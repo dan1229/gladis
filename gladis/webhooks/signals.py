@@ -9,96 +9,13 @@ from webhooks.slack import SlackClient
 @receiver(post_save, sender=GithubPullRequest)
 def github_pull_request_handle_messages(sender, instance, created, **kwargs):
     pass
-    # TODO send messages
-    # if action and action == "opened":
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, "PR opened! :tada:"
-    #     )
-    # elif action and action == "closed":
-    #     if merged:
-    #         self.send_slack_message_to_user(
-    #             "Congrats! Your PR was merged! :tada:",
-    #             payload.get("pull_request", {}).get("user", {}).get("login"),
-    #         )
-    #         slack_message = SlackClient.add_to_slack_string(
-    #             slack_message, "PR merged! :merged_parrot:"
-    #         )
-    #     else:
-    #         slack_message = SlackClient.add_to_slack_string(
-    #             slack_message, "PR closed! :sad:"
-    #         )
-    # SlackClient.add_to_slack_string(slack_message, "action: {action}")
-    # if title:
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, f"title: {title}"
-    #     )
-
-    # if pr_number:
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, f"pr number: {pr_number}"
-    #     )
-
-    # slack_message = SlackClient.add_to_slack_string(
-    #     slack_message, f"id: {github_id}"
-    # )
-    # if state:
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, f"state: {state}"
-    #     )
-    # slack_message = SlackClient.add_to_slack_string(
-    #     slack_message, f"draft: {is_draft}"
-    # )
-
-    # if github_user:
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, f"user: {github_user}"
-    #     )
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, f"user link: {github_user_link}"
-    #     )
-    # if repository:
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, f"repository: {repository}"
-    #     )
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, f"repository link: {repository_link}"
-    #     )
-    # if requested_reviewers and len(requested_reviewers > 0):
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, f"requested reviewers: {requested_reviewers}"
-    #     )
 
 
 @receiver(post_save, sender=GithubWorkflow)
 def github_workflow_handle_messages(sender, instance, created, **kwargs):
     send_message_ci_passing(instance)
     send_message_ci_failing(instance)
-    # TODO send messages
-    # slack_message = SlackClient.add_to_slack_string(
-    #     slack_message, f"Workflow {action}"
-    # )
-    # slack_message = add_workflow_status_emoji(slack_message, payload)
-    # slack_message = SlackClient.add_to_slack_string(
-    #     slack_message, f"id: {github_id}"
-    # )
-    # slack_message = SlackClient.add_to_slack_string(slack_message, f"name: {name}")
-    # TODO - distinguish between 'workflow_run' and 'workflow_job' events via payload
-    # slack_message = SlackClient.add_to_slack_string(
-    #     slack_message, "webhook type: workflow run"
-    # )
-    # if status and status != "":
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message,
-    #         f"status: {status}",
-    #     )
-    # if conclusion and conclusion != "":
-    #     slack_message = SlackClient.add_to_slack_string(
-    #         slack_message, f"conclusion: {conclusion}"
-    #     )
-    # slack_message = SlackClient.add_to_slack_string(
-    #     slack_message, f"url: {"
-    # )
-
+    
 
 #
 # MESSAGING FUNCTIONS
@@ -147,14 +64,17 @@ def send_message_ci_passing(workflow):
         )
         SlackClient().send_slack_direct_message(slack_message, slack_author_username)
 
-        for reviewer in workflow.requested_reviewers:
-            slack_reviewer_username = (
-                SlackClient.get_slack_username_from_github_username(reviewer)
-            )
-            SlackClient().send_slack_direct_message(
-                slack_message, slack_reviewer_username
-            )
-
+        try:
+            pull_request = GithubPullRequest.objects.get(github_id=workflow.pull_request_id)
+            for reviewer in pull_request.requested_reviewers:
+                slack_reviewer_username = (
+                    SlackClient.get_slack_username_from_github_username(reviewer)
+                )
+                SlackClient().send_slack_direct_message(
+                    slack_message, slack_reviewer_username
+                )
+        except GithubPullRequest.DoesNotExist:
+            print(f"ERROR: send_message_ci_passing: no pull request found. Workflow ID: {workflow.id}")
 
 # TODO
 # - ci failing

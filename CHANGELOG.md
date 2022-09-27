@@ -35,9 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 #### logging
+- create some standard logging function
 - where/how to log?
-- sentry?
-- slack lol
+    - sentry?
+    - slack lol
 
 
 #### api app
