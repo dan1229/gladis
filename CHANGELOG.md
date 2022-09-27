@@ -92,11 +92,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ----
 ### 0.0.2
 
-#### documentation
-- how to run
-- how to signup/activate
-
-
 #### ngrok subdomain
 - need to attach to some subdomain since it assigns random urls
 - gladis.mercury.com
@@ -104,11 +99,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### threading
 - what would be appropriate to thread?
-
-
-#### switch to mercury github
-- switch to mercury github
-- figure out how to add other users
 
 
 #### notify people of comments
@@ -130,6 +120,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### messaging functions in signals.py
 - view comments and fill out
 
+
+#### documentation
+- readme
+    - how to run
+    - how to signup/activate
+    - github app setup for repo
+
+
+#### switch to mercury github
+- switch to mercury github
+- figure out how to add other users
 
 
 ### [0.0.1] - 2022-09-23
