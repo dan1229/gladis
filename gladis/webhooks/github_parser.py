@@ -70,10 +70,10 @@ class GithubParser:
         pull_requests = payload.get("workflow_run", {}).get("pull_requests")
         pull_request_url = None
         pull_request_github_id = None
-        if pull_requests != None and len(pull_requests) > 0:
+        if pull_requests is not None and len(pull_requests) > 0:
             pull_request_url = pull_requests[0].get("url")
             pull_request_github_id = pull_requests[0].get("id")
-            
+
         # create or update workflow run object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
         if workflows.count() == 0:
@@ -108,10 +108,9 @@ class GithubParser:
         pull_requests = payload.get("workflow_job", {}).get("pull_requests")
         pull_request_url = None
         pull_request_github_id = None
-        if pull_requests != None and len(pull_requests) > 0:
+        if pull_requests is not None and len(pull_requests) > 0:
             pull_request_url = pull_requests[0].get("url")
             pull_request_github_id = pull_requests[0].get("id")
-            
 
         # create or update workflow job object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
