@@ -115,7 +115,7 @@ def send_message_ci_failing(workflow):
 # TODO
 # - pr opened
 #   - send to author
-def send_message_pr_opened(instance):
+def send_message_pr_opened(pull_request):
     pass
 
 
@@ -123,13 +123,31 @@ def send_message_pr_opened(instance):
 # - pr merged
 #   - send to author
 #   - send to reviewers
-def send_message_pr_merged(instance):
-    pass
+def send_message_pr_merged(pull_request):
+    if pull_request.is_merged:
+        slack_message = ""
+        slack_message = SlackClient.add_to_slack_string(slack_message, "PR merged! :tada:")
+        slack_message = SlackClient.add_to_slack_string(slack_message, "-------------------")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"author: {pull_request.github_user}")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"pull request id: {pull_request.github_id}")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"pull request link: {pull_request.pull_request_url}")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"repository link: {pull_request.repository_link}")
 
-
+        slack_author_username = SlackClient.get_slack_username(pull_request.github_user)
+        SlackClient().send_slack_direct_message(slack_message, slack_author_username)
+        
+        for reviewer in pull_request.requested_reviewers:
+            slack_reviewer_username = (
+                SlackClient.get_slack_username_from_github_username(reviewer)
+            )
+            SlackClient().send_slack_direct_message(
+                slack_message, slack_reviewer_username
+            )
+            
+            
 # TODO
 # - pr closed
-def send_message_pr_closed(instance):
+def send_message_pr_closed(pull_request):
     pass
 
 
