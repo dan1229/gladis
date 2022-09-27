@@ -49,7 +49,7 @@ class GithubWebhookReceived(WebhookReceived):
     #
     # FUNCTIONS ====================================== #
     #
-    def user_is_involved(self):
+    def gladis_user_is_involved(self):
         """Check if the user is involved in the event."""
         user = self.payload.get("actor", {}).get("login")
         if not user:

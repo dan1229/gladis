@@ -143,8 +143,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - figure out how to add other users
 
 
+#### verify reviewer send slack message logic
+- need to add reviewer to pr to test
+    - cant add myself
+    - cant send to users who arent signed up either
+
 
 ### [0.0.2] - 2022-09-27
+- Only send messages to users who are signed up for GLADIS
+- Ready for review message
 #### TODO
 - Added to mercury github
 - Documentation improvements
