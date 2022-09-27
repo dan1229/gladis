@@ -83,7 +83,10 @@ class User(AbstractUser, AbstractBaseModel):
         return f"{self.first_name} {self.last_name}"
 
     def __str__(self):
-        return self.full_name
+        full_name = self.full_name
+        if full_name and full_name != " ":
+            return full_name
+        return self.email
 
     class Meta:
         app_label = "core"
@@ -96,6 +99,7 @@ class User(AbstractUser, AbstractBaseModel):
 class UserSettings(AbstractBaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="settings")
     slack_username = models.CharField(max_length=255, null=False, blank=False)
+    github_username = models.CharField(max_length=255, null=False, blank=False)
 
     def __str__(self):
         return f"User Settings ({self.user})"

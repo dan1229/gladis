@@ -85,3 +85,5 @@ class GithubWebhookReceived(WebhookReceived):
             self.webhook_type = "workflow_job"
             GithubParser().parse_workflow_job(self.payload, send_slack_message)
             self.save()
+
+        print("Webhook Processed {}".format(self))

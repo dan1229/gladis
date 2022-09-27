@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 
-from webhooks.models import GithubWebhookReceived
+from webhooks.models.webhooks import GithubWebhookReceived
 
 
 @csrf_exempt
@@ -21,5 +21,4 @@ def github_webhook(request):
     )
     if webhook.user_is_involved():
         webhook.process_github_webhook()
-    print("Webhook Received {}".format(webhook))
     return HttpResponse("Message received okay.", content_type="text/plain")

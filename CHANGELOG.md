@@ -56,6 +56,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - what should we react to?
 
 
+#### github api
+- mark pr as ready for review
+    - github update functionality? may be somewhat difficult
+- what other kind of functionality would we want?
+
+
 #### TESTS
 - webhooks
     - test webhook receivers against different event types
@@ -105,8 +111,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - figure out how to add other users
 
 
+#### notify people of comments
+- if someone comments -> dm author
+- if author requests re review -> dm reviewers
+
+
+
 ----
 ### 0.0.1
+
 
 
 #### home page
@@ -114,29 +127,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add admin link
 
 
-#### notify people of comments
-- if someone comments -> dm author
-- if author requests re review -> dm reviewers
+#### messaging functions in signals.py
+- view comments and fill out
 
-
-#### ci status updates
-- get commit hash for messages
-    - maybe commit message as well
-- when ci passes
-    - send dm to author
-    - send dm to reviewers
-    - mark pr as ready for review
-        - github update functionality? may be somewhat difficult
-- when ci fails
-    - send dm to author
-    - mark pr as not ready for review
-    
-
-#### create ci and pr models
-- model to track pr
-    - probably need to thread and emoji
-- need to store ci status for each pr to tell when it passes
-    - when passes send message
 
 
 ### [0.0.1] - 2022-09-23

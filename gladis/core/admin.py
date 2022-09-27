@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from core.models import User, UserSettings
+from core.models import UserSettings
 from django.contrib.auth import get_user_model
 
 
@@ -61,4 +61,4 @@ class CustomUserAdmin(UserAdmin):
     readonly_fields = ("id",)
 
 
-admin.site.register(User, CustomUserAdmin)
+admin.site.register(get_user_model(), CustomUserAdmin)
