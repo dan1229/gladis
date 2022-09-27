@@ -64,7 +64,7 @@ def send_message_ci_passing(workflow):
 
         try:
             pull_request = GithubPullRequest.objects.get(
-                github_id=workflow.pull_request_id
+                github_id=workflow.pull_request_github_id
             )
             for reviewer in pull_request.requested_reviewers:
                 slack_reviewer_username = (
