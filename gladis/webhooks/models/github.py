@@ -72,6 +72,15 @@ class GithubWorkflow(AbstractBaseModel):
     github_user_link = models.CharField(
         max_length=255, help_text="The user link of the PR.", blank=True, null=True
     )
+    repository = models.CharField(
+        max_length=255, help_text="The repository of the PR.", blank=True, null=True
+    )
+    repository_link = models.CharField(
+        max_length=255,
+        help_text="The repository link of the PR.",
+        blank=True,
+        null=True,
+    )
     action = models.CharField(
         max_length=255, help_text="The action of the workflow.", blank=True, null=True
     )
