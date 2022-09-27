@@ -75,10 +75,13 @@ def send_message_ci_passing(workflow):
                 f"ERROR: send_message_ci_passing: no pull request found. Workflow ID: {workflow.id}"
             )
 
+
 def send_message_ci_failing(workflow):
     if workflow.status == "completed" and workflow.conclusion == "failure":
         slack_message = ""
-        slack_message = SlackClient.add_to_slack_string(slack_message, "CI failed! You suck! :feelsbadman:")
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, "CI failed! You suck! :feelsbadman:"
+        )
         slack_message = SlackClient.add_to_slack_string(
             slack_message, "-------------------"
         )
@@ -111,45 +114,57 @@ def send_message_ci_failing(workflow):
         SlackClient().send_slack_direct_message(slack_message, slack_author_username)
 
 
-
-
-
-# TODO
-# - pr opened
-#   - send to author
 def send_message_pr_opened(pull_request, created):
-    
     if created:
         slack_message = ""
-        slack_message = SlackClient.add_to_slack_string(slack_message, "PR opened! :open_hands:")
-        slack_message = SlackClient.add_to_slack_string(slack_message, "-------------------")
-        slack_message = SlackClient.add_to_slack_string(slack_message, f"author: {pull_request.github_user}")
-        slack_message = SlackClient.add_to_slack_string(slack_message, f"pull request id: {pull_request.github_id}")
-        slack_message = SlackClient.add_to_slack_string(slack_message, f"pull request link: {pull_request.pull_request_url}")
-        slack_message = SlackClient.add_to_slack_string(slack_message, f"repository link: {pull_request.repository_link}")
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, "PR opened! :open_hands:"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, "-------------------"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"author: {pull_request.github_user}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"pull request id: {pull_request.github_id}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"pull request link: {pull_request.pull_request_url}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"repository link: {pull_request.repository_link}"
+        )
 
         slack_author_username = SlackClient.get_slack_username(pull_request.github_user)
         SlackClient().send_slack_direct_message(slack_message, slack_author_username)
-        
 
 
-# TODO
-# - pr merged
-#   - send to author
-#   - send to reviewers
 def send_message_pr_merged(pull_request):
     if pull_request.is_merged:
         slack_message = ""
-        slack_message = SlackClient.add_to_slack_string(slack_message, "PR merged! :tada:")
-        slack_message = SlackClient.add_to_slack_string(slack_message, "-------------------")
-        slack_message = SlackClient.add_to_slack_string(slack_message, f"author: {pull_request.github_user}")
-        slack_message = SlackClient.add_to_slack_string(slack_message, f"pull request id: {pull_request.github_id}")
-        slack_message = SlackClient.add_to_slack_string(slack_message, f"pull request link: {pull_request.pull_request_url}")
-        slack_message = SlackClient.add_to_slack_string(slack_message, f"repository link: {pull_request.repository_link}")
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, "PR merged! :tada:"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, "-------------------"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"author: {pull_request.github_user}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"pull request id: {pull_request.github_id}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"pull request link: {pull_request.pull_request_url}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"repository link: {pull_request.repository_link}"
+        )
 
         slack_author_username = SlackClient.get_slack_username(pull_request.github_user)
         SlackClient().send_slack_direct_message(slack_message, slack_author_username)
-        
+
         for reviewer in pull_request.requested_reviewers:
             slack_reviewer_username = (
                 SlackClient.get_slack_username_from_github_username(reviewer)
@@ -157,8 +172,8 @@ def send_message_pr_merged(pull_request):
             SlackClient().send_slack_direct_message(
                 slack_message, slack_reviewer_username
             )
-            
-            
+
+
 # TODO
 # - pr closed
 def send_message_pr_closed(pull_request):
