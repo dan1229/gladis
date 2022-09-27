@@ -67,61 +67,17 @@ class GithubParser:
         status = payload.get("workflow_run", {}).get("status")
         conclusion = payload.get("workflow_run", {}).get("conclusion")
         workflow_url = payload.get("workflow", {}).get("html_url")
-        pull_request_url = (
-            payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
-        )
-
-        # create or update workflow run object
-        workflows = GithubWorkflow.objects.filter(github_id=github_id)
-        if workflows.count() == 0:
-            GithubWorkflow.objects.create(
-                title=name,
-                github_id=github_id,
-                action=action,
-                name=name,
-                status=status,
-                conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_run", {})
-                .get("pull_requests", [{}])[0]
-                .get("id"),
-                workflow_url=workflow_url,
-                pull_request_url=pull_request_url,
-            )
-        else:
-            workflow = workflows.first()
-            workflow.title = name
-            workflow.github_id = github_id
-            workflow.action = action
-            workflow.name = name
-            workflow.status = status
-            workflow.conclusion = conclusion
-            workflow.pull_request_github_id = (
-                payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
-            )
-            workflow.workflow_url = workflow_url
-            workflow.pull_request_url = pull_request_url
-
-    def parse_workflow_job(self, payload):
-        action = payload.get("action")
-        github_id = payload.get("workflow_job", {}).get("id")
-        name = payload.get("workflow", {}).get("name")
-        status = payload.get("workflow_run", {}).get("status")
-        conclusion = payload.get("workflow_job", {}).get("conclusion")
-        workflow_url = payload.get("workflow", {}).get("html_url")
-        pull_requests = payload.get("workflow_job", {}).get("pull_requests")
-        print("WORKFLOW JOB PAYLOAD: ", payload.get("workflow_job", {}))
+        pull_requests = payload.get("workflow_run", {}).get("pull_requests")
         pull_request_url = None
         pull_request_github_id = None
         if pull_requests != None and len(pull_requests) > 0:
             pull_request_url = pull_requests[0].get("url")
             pull_request_github_id = pull_requests[0].get("id")
             
-
-        # create or update workflow job object
+        # create or update workflow run object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
         if workflows.count() == 0:
             GithubWorkflow.objects.create(
-                title=name,
                 github_id=github_id,
                 action=action,
                 name=name,
@@ -133,7 +89,45 @@ class GithubParser:
             )
         else:
             workflow = workflows.first()
-            workflow.title = name
+            workflow.github_id = github_id
+            workflow.action = action
+            workflow.name = name
+            workflow.status = status
+            workflow.conclusion = conclusion
+            workflow.pull_request_github_id = pull_request_github_id
+            workflow.workflow_url = workflow_url
+            workflow.pull_request_url = pull_request_url
+
+    def parse_workflow_job(self, payload):
+        action = payload.get("action")
+        github_id = payload.get("workflow_job", {}).get("id")
+        name = payload.get("workflow", {}).get("name")
+        status = payload.get("workflow_run", {}).get("status")
+        conclusion = payload.get("workflow_job", {}).get("conclusion")
+        workflow_url = payload.get("workflow", {}).get("html_url")
+        pull_requests = payload.get("workflow_job", {}).get("pull_requests")
+        pull_request_url = None
+        pull_request_github_id = None
+        if pull_requests != None and len(pull_requests) > 0:
+            pull_request_url = pull_requests[0].get("url")
+            pull_request_github_id = pull_requests[0].get("id")
+            
+
+        # create or update workflow job object
+        workflows = GithubWorkflow.objects.filter(github_id=github_id)
+        if workflows.count() == 0:
+            GithubWorkflow.objects.create(
+                github_id=github_id,
+                action=action,
+                name=name,
+                status=status,
+                conclusion=conclusion,
+                pull_request_github_id=pull_request_github_id,
+                workflow_url=workflow_url,
+                pull_request_url=pull_request_url,
+            )
+        else:
+            workflow = workflows.first()
             workflow.github_id = github_id
             workflow.action = action
             workflow.name = name
