@@ -15,7 +15,7 @@ def github_pull_request_handle_messages(sender, instance, created, **kwargs):
 def github_workflow_handle_messages(sender, instance, created, **kwargs):
     send_message_ci_passing(instance)
     send_message_ci_failing(instance)
-    
+
 
 #
 # MESSAGING FUNCTIONS
@@ -65,7 +65,9 @@ def send_message_ci_passing(workflow):
         SlackClient().send_slack_direct_message(slack_message, slack_author_username)
 
         try:
-            pull_request = GithubPullRequest.objects.get(github_id=workflow.pull_request_id)
+            pull_request = GithubPullRequest.objects.get(
+                github_id=workflow.pull_request_id
+            )
             for reviewer in pull_request.requested_reviewers:
                 slack_reviewer_username = (
                     SlackClient.get_slack_username_from_github_username(reviewer)
@@ -74,7 +76,10 @@ def send_message_ci_passing(workflow):
                     slack_message, slack_reviewer_username
                 )
         except GithubPullRequest.DoesNotExist:
-            print(f"ERROR: send_message_ci_passing: no pull request found. Workflow ID: {workflow.id}")
+            print(
+                f"ERROR: send_message_ci_passing: no pull request found. Workflow ID: {workflow.id}"
+            )
+
 
 # TODO
 # - ci failing
