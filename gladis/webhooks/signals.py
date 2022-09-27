@@ -59,7 +59,7 @@ def send_message_ci_passing(workflow):
             slack_message, f"workflow conclusion: {workflow.conclusion}"
         )
 
-        slack_author_username = SlackClient.get_slack_username_from_github_username(
+        slack_author_username = SlackClient.get_slack_username(
             workflow.github_user
         )
         SlackClient().send_slack_direct_message(slack_message, slack_author_username)
