@@ -115,6 +115,11 @@ def send_message_ci_failing(workflow):
 
 
 def send_message_pr_opened(pull_request, created):
+    print(pull_request)
+    print(created)
+    # TODO basing this off of 'created' wont reflect if the PR was opened
+    # as a draft, as a 'regular' PR, changed to a regular PR, etc.
+    # Need to find a way to determine change of PR state
     if created:
         slack_message = ""
         slack_message = SlackClient.add_to_slack_string(
