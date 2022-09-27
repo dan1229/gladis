@@ -23,6 +23,7 @@ def github_workflow_handle_messages(sender, instance, created, **kwargs):
 # SLACK MESSAGING FUNCTIONS
 #
 def send_message_ci_passing(workflow):
+    # TODO should message only be sent if PR is not in draft?
     if workflow.status == "completed" and workflow.conclusion == "success":
         slack_message = ""
         slack_message = SlackClient.add_to_slack_string(
@@ -77,6 +78,7 @@ def send_message_ci_passing(workflow):
 
 
 def send_message_ci_failing(workflow):
+    # TODO should message only be sent if PR is not in draft?
     if workflow.status == "completed" and workflow.conclusion == "failure":
         slack_message = ""
         slack_message = SlackClient.add_to_slack_string(
@@ -115,8 +117,6 @@ def send_message_ci_failing(workflow):
 
 
 def send_message_pr_opened(pull_request, created):
-    print(pull_request)
-    print(created)
     # TODO basing this off of 'created' wont reflect if the PR was opened
     # as a draft, as a 'regular' PR, changed to a regular PR, etc.
     # Need to find a way to determine change of PR state
@@ -180,6 +180,7 @@ def send_message_pr_merged(pull_request):
 
 
 def send_message_pr_closed(pull_request):
+    # TODO do we want this?
     pass
 
 
