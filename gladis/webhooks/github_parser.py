@@ -1,4 +1,3 @@
-import re
 from webhooks.models.github import GithubPullRequest, GithubWorkflow
 
 
