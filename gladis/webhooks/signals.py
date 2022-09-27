@@ -187,6 +187,7 @@ def send_message_pr_merged(pull_request):
             if slack_reviewer_username:
                 send_message_pr_ready_for_review(pull_request, reviewer)
 
+
 def send_message_pr_ready_for_review(pull_request, slack_reviewer_username):
     if not pull_request.is_draft:
         slack_message = ""
@@ -209,10 +210,9 @@ def send_message_pr_ready_for_review(pull_request, slack_reviewer_username):
             slack_message, f"repository link: {pull_request.repository_link}"
         )
 
-        SlackClient().send_slack_direct_message(
-                    slack_message, slack_reviewer_username
-                )
-        
+        SlackClient().send_slack_direct_message(slack_message, slack_reviewer_username)
+
+
 def send_message_pr_closed(pull_request):
     # TODO do we want this?
     pass
