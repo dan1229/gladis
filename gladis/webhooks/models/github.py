@@ -10,6 +10,9 @@ class GithubPullRequest(AbstractBaseModel):
     title = models.CharField(
         max_length=255, help_text="The title of the PR.", blank=True, null=True
     )
+    action = models.CharField(
+        max_length=255, help_text="The action of the PR.", blank=True, null=True
+    )
     github_id = models.CharField(
         max_length=255, help_text="The id of the workflow.", blank=True, null=True
     )
