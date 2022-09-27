@@ -139,8 +139,6 @@ class GithubParser:
             workflow.name = name
             workflow.status = status
             workflow.conclusion = conclusion
-            workflow.pull_request_github_id = (
-                payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
-            )
+            workflow.pull_request_github_id = pull_request_github_id
             workflow.workflow_url = workflow_url
             workflow.pull_request_url = pull_request_url
