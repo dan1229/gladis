@@ -9,6 +9,8 @@ from webhooks.slack import SlackClient
 @receiver(post_save, sender=GithubPullRequest)
 def github_pull_request_handle_messages(sender, instance, created, **kwargs):
     send_message_pr_opened(instance)
+    # TODO do we need this function or will this be handled by the ci functions?
+    # send_message_pr_ready_for_review(instance)
     send_message_pr_merged(instance)
     send_message_pr_closed(instance)
 
@@ -67,7 +69,7 @@ def send_message_ci_passing(workflow):
             pull_request = GithubPullRequest.objects.get(
                 github_id=workflow.pull_request_github_id
             )
-            for reviewer in pull_request.requested_reviewers:
+            for reviewer in pull_request.reviewers:
                 slack_reviewer_username = (
                     SlackClient.get_slack_username_from_github_username(reviewer)
                 )
@@ -180,7 +182,7 @@ def send_message_pr_merged(pull_request):
                 slack_message, slack_author_username
             )
 
-        for reviewer in pull_request.requested_reviewers:
+        for reviewer in pull_request.reviewers:
             slack_reviewer_username = (
                 SlackClient.get_slack_username_from_github_username(reviewer)
             )
