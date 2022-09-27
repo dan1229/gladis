@@ -8,7 +8,9 @@ from webhooks.slack import SlackClient
 
 @receiver(post_save, sender=GithubPullRequest)
 def github_pull_request_handle_messages(sender, instance, created, **kwargs):
-    pass
+    send_message_pr_opened(instance, created)
+    send_message_pr_merged(instance)
+    send_message_pr_closed(instance)
 
 
 @receiver(post_save, sender=GithubWorkflow)
@@ -115,8 +117,20 @@ def send_message_ci_failing(workflow):
 # TODO
 # - pr opened
 #   - send to author
-def send_message_pr_opened(pull_request):
-    pass
+def send_message_pr_opened(pull_request, created):
+    
+    if created:
+        slack_message = ""
+        slack_message = SlackClient.add_to_slack_string(slack_message, "PR opened! :open_hands:")
+        slack_message = SlackClient.add_to_slack_string(slack_message, "-------------------")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"author: {pull_request.github_user}")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"pull request id: {pull_request.github_id}")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"pull request link: {pull_request.pull_request_url}")
+        slack_message = SlackClient.add_to_slack_string(slack_message, f"repository link: {pull_request.repository_link}")
+
+        slack_author_username = SlackClient.get_slack_username(pull_request.github_user)
+        SlackClient().send_slack_direct_message(slack_message, slack_author_username)
+        
 
 
 # TODO
