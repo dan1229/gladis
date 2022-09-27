@@ -18,7 +18,7 @@ def github_workflow_handle_messages(sender, instance, created, **kwargs):
 
 
 #
-# MESSAGING FUNCTIONS
+# SLACK MESSAGING FUNCTIONS
 #
 def send_message_ci_passing(workflow):
     if workflow.status == "completed" and workflow.conclusion == "success":
@@ -73,10 +73,6 @@ def send_message_ci_passing(workflow):
                 f"ERROR: send_message_ci_passing: no pull request found. Workflow ID: {workflow.id}"
             )
 
-
-# TODO
-# - ci failing
-#   - send to author
 def send_message_ci_failing(workflow):
     if workflow.status == "completed" and workflow.conclusion == "failure":
         slack_message = ""
