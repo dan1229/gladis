@@ -174,8 +174,6 @@ def send_message_pr_merged(pull_request):
             )
 
 
-# TODO
-# - pr closed
 def send_message_pr_closed(pull_request):
     pass
 
