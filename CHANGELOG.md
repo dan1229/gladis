@@ -35,9 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 #### logging
+- create some standard logging function
 - where/how to log?
-- sentry?
-- slack lol
+    - sentry?
+    - slack lol
 
 
 #### api app
@@ -92,11 +93,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ----
 ### 0.0.2
 
-#### documentation
-- how to run
-- how to signup/activate
-
-
 #### ngrok subdomain
 - need to attach to some subdomain since it assigns random urls
 - gladis.mercury.com
@@ -106,15 +102,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - what would be appropriate to thread?
 
 
-#### switch to mercury github
-- switch to mercury github
-- figure out how to add other users
-
-
 #### notify people of comments
 - if someone comments -> dm author
 - if author requests re review -> dm reviewers
 
+
+#### github parser error handling
+- improve somehow - add try/catches?
 
 
 ----
@@ -127,8 +121,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add admin link
 
 
-#### messaging functions in signals.py
-- view comments and fill out
+#### documentation
+- readme
+    - how to run
+    - how to signup/activate
+    - github app setup for repo
+
+
+#### switch to mercury github
+- switch to mercury github
+- figure out how to add other users
 
 
 

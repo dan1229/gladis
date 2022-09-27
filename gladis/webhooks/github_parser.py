@@ -59,6 +59,7 @@ class GithubParser:
             pull_request.repository_link = repository_link
             pull_request.reviewers = requested_reviewers
             pull_request.pull_request_url = pull_request_url
+            pull_request.save()
 
     def parse_workflow_run(self, payload):
         action = payload.get("action")
@@ -66,78 +67,98 @@ class GithubParser:
         name = payload.get("workflow", {}).get("name")
         status = payload.get("workflow_run", {}).get("status")
         conclusion = payload.get("workflow_run", {}).get("conclusion")
+        github_user = payload.get("sender", {}).get("login")
+        github_user_link = payload.get("sender", {}).get("html_url")
         workflow_url = payload.get("workflow", {}).get("html_url")
-        pull_request_url = (
-            payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
-        )
+        repository = payload.get("repository", {}).get("full_name")
+        repository_link = payload.get("repository", {}).get("html_url")
+        pull_requests = payload.get("workflow_run", {}).get("pull_requests")
+        pull_request_url = None
+        pull_request_github_id = None
+        if pull_requests is not None and len(pull_requests) > 0:
+            pull_request_url = pull_requests[0].get("url")
+            pull_request_github_id = pull_requests[0].get("id")
 
         # create or update workflow run object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
         if workflows.count() == 0:
             GithubWorkflow.objects.create(
-                title=name,
                 github_id=github_id,
                 action=action,
                 name=name,
                 status=status,
                 conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_run", {})
-                .get("pull_requests", [{}])[0]
-                .get("id"),
+                github_user=github_user,
+                github_user_link=github_user_link,
+                repository=repository,
+                repository_link=repository_link,
+                pull_request_github_id=pull_request_github_id,
                 workflow_url=workflow_url,
                 pull_request_url=pull_request_url,
             )
         else:
             workflow = workflows.first()
-            workflow.title = name
             workflow.github_id = github_id
             workflow.action = action
             workflow.name = name
             workflow.status = status
             workflow.conclusion = conclusion
-            workflow.pull_request_github_id = (
-                payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
-            )
+            workflow.github_user = github_user
+            workflow.github_user_link = github_user_link
+            workflow.repository = repository
+            workflow.repository_link = repository_link
+            workflow.pull_request_github_id = pull_request_github_id
             workflow.workflow_url = workflow_url
             workflow.pull_request_url = pull_request_url
+            workflow.save()
 
     def parse_workflow_job(self, payload):
         action = payload.get("action")
-        github_id = payload.get("workflow_run", {}).get("id")
+        github_id = payload.get("workflow_job", {}).get("id")
         name = payload.get("workflow", {}).get("name")
         status = payload.get("workflow_run", {}).get("status")
-        conclusion = payload.get("workflow_run", {}).get("conclusion")
+        conclusion = payload.get("workflow_job", {}).get("conclusion")
+        github_user = payload.get("sender", {}).get("login")
+        github_user_link = payload.get("sender", {}).get("html_url")
         workflow_url = payload.get("workflow", {}).get("html_url")
-        pull_request_url = (
-            payload.get("workflow_run", {}).get("pull_requests")[0].get("url")
-        )
+        repository = payload.get("repository", {}).get("full_name")
+        repository_link = payload.get("repository", {}).get("html_url")
+        pull_requests = payload.get("workflow_job", {}).get("pull_requests")
+        pull_request_url = None
+        pull_request_github_id = None
+        if pull_requests is not None and len(pull_requests) > 0:
+            pull_request_url = pull_requests[0].get("url")
+            pull_request_github_id = pull_requests[0].get("id")
 
         # create or update workflow job object
         workflows = GithubWorkflow.objects.filter(github_id=github_id)
         if workflows.count() == 0:
             GithubWorkflow.objects.create(
-                title=name,
                 github_id=github_id,
                 action=action,
                 name=name,
                 status=status,
                 conclusion=conclusion,
-                pull_request_github_id=payload.get("workflow_job", {})
-                .get("pull_requests", [{}])[0]
-                .get("id"),
+                github_user=github_user,
+                github_user_link=github_user_link,
+                repository=repository,
+                repository_link=repository_link,
+                pull_request_github_id=pull_request_github_id,
                 workflow_url=workflow_url,
                 pull_request_url=pull_request_url,
             )
         else:
             workflow = workflows.first()
-            workflow.title = name
             workflow.github_id = github_id
             workflow.action = action
             workflow.name = name
             workflow.status = status
             workflow.conclusion = conclusion
-            workflow.pull_request_github_id = (
-                payload.get("workflow_run", {}).get("pull_requests", [{}])[0].get("id")
-            )
+            workflow.github_user = github_user
+            workflow.github_user_link = github_user_link
+            workflow.repository = repository
+            workflow.repository_link = repository_link
+            workflow.pull_request_github_id = pull_request_github_id
             workflow.workflow_url = workflow_url
             workflow.pull_request_url = pull_request_url
+            workflow.save()
