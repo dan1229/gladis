@@ -9,8 +9,6 @@ from webhooks.slack import SlackClient
 @receiver(post_save, sender=GithubPullRequest)
 def github_pull_request_handle_messages(sender, instance, created, **kwargs):
     send_message_pr_opened(instance)
-    # TODO do we need this function or will this be handled by the ci functions?
-    # send_message_pr_ready_for_review(instance)
     send_message_pr_merged(instance)
     send_message_pr_closed(instance)
 
@@ -187,11 +185,34 @@ def send_message_pr_merged(pull_request):
                 SlackClient.get_slack_username_from_github_username(reviewer)
             )
             if slack_reviewer_username:
-                SlackClient().send_slack_direct_message(
+                send_message_pr_ready_for_review(pull_request, reviewer)
+
+def send_message_pr_ready_for_review(pull_request, slack_reviewer_username):
+    if not pull_request.is_draft:
+        slack_message = ""
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, "PR ready for review! :eyes:"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, "-------------------"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"author: {pull_request.github_user}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"pull request id: {pull_request.github_id}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"pull request link: {pull_request.pull_request_url}"
+        )
+        slack_message = SlackClient.add_to_slack_string(
+            slack_message, f"repository link: {pull_request.repository_link}"
+        )
+
+        SlackClient().send_slack_direct_message(
                     slack_message, slack_reviewer_username
                 )
-
-
+        
 def send_message_pr_closed(pull_request):
     # TODO do we want this?
     pass
